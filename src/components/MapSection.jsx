@@ -79,7 +79,7 @@ const MapSection = () => {
       onMove={evt=>setViewState(evt.viewState)}
       mapStyle="mapbox://styles/mapbox/streets-v9"
       mapboxAccessToken={token}
-      style={{height:'85vh'}}
+      style={{height:'85vh',zIndex:1}}
     >
       <Source id='routeSource' type='geojson' data={geojson}>
         <Layer {...lineStyle} />

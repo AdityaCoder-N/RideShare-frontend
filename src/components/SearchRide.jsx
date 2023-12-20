@@ -16,7 +16,10 @@ const SearchRide = () => {
 
   return (
     <form className='border-2 border-gray-400 rounded-xl p-4' onSubmit={onsubmit}>
-        <h2 className='text-2xl font-semibold mb-2 ml-1'>Search Ride</h2>
+        <div className='flex justify-between items-center'>
+            <h2 className='text-2xl font-semibold mb-2 ml-1'>Search Ride</h2>
+            <span className='font-semibold'>Balance - 2342 coins</span>
+        </div>
         <div className='relative mt-4'>
             <img src={sourceImg} alt="" className='absolute left-2 top-[50%] translate-y-[-50%]'/>
             <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw">

@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import CreateRide from './pages/CreateRide';
+import Verification from './pages/Verification';
 function App() {
   
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/create-ride" element={<CreateRide />} />
+          <Route path="/verify" element={<Verification/>} />
           {/* <Route path="/contact" element={<Contact />} /> */}
         </Routes>
       </Router>

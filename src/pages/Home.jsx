@@ -17,7 +17,7 @@ const endCoord = [-84.512023, 39.102779]; // Example end coordinate
 
                 <AvailableRides/>
             </div>
-            <div className='w-[70%] p-4'>
+            <div className='w-[70%] p-4 z-1'>
                 <MapSection startCoord={startCoord} endCoord={endCoord} />
             </div>
         </div>

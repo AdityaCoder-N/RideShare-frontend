@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import car from '../assets/car.jpg'
+import AcceptRideModal from './AcceptRideModal';
 
 
 const SingleRide = ()=>{
+
+    const [accept,setAccept] = useState(false);
+
     return(
         <div className='bg-gray-300 rounded-xl p-4 mt-2'>
             <div className='flex w-full gap-4'>
@@ -12,6 +16,8 @@ const SingleRide = ()=>{
                 <div className='w-[70%]'>
                     <div className='font-semibold'>Rider Name - Aditya</div>
                     <div className='font-semibold'>Cost - 450 coins</div>
+                    <div className='font-semibold'>Seats Available - 2</div>
+
                 </div>
             </div>
             <div className='flex justify-between font-semibold mt-2'>
@@ -20,7 +26,9 @@ const SingleRide = ()=>{
                 <div>To - Mussourie,Dehradun asdasda</div>
 
             </div>
-            <button className='bg-black text-white rounded-xl py-1 w-full mt-3 cursor-pointer'>Accept Ride</button>
+            <button className='bg-black text-white rounded-xl py-1 w-full mt-3 cursor-pointer' onClick={()=>setAccept(true)}>Accept Ride</button>
+
+            {/* {accept && <AcceptRideModal setAccept={setAccept}/>} */}
         </div>
     )
 }

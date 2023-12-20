@@ -16,7 +16,7 @@ const CreateRide = () => {
         setFormData({...formData,[e.target.name]:e.target.value})
     }
   return (
-    <div className='h-[90vh] flex justify-center items-center bg-image '>
+    <div className='h-[92vh] flex justify-center items-center bg-image '>
 
         <form action="" className='bg-[rgba(255,255,255,0.28)] rounded-xl p-8 backdrop-blur-md '>
             <h2 className='text-4xl font-bold'>Create a Ride!</h2>
