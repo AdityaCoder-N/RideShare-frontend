@@ -14,3 +14,10 @@ a{
 nav{
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+.bg-image{
+  background-image: url('assets/register-bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
