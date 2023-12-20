@@ -1,8 +1,10 @@
-import React,{useRef, useState} from 'react'
+import React,{useRef, useState,useContext} from 'react'
 import close from '../assets/x-circle-fill.svg'
-
+import UserContext from '../context/UserContext'
 
 const Verification = () => {
+
+    const host='http://localhost:3001'
 
     const [formData,setFormData]=useState({name:'',dob:"",dlNumber:''})
     const [userImage,setUserImage] = useState('');
@@ -61,11 +63,17 @@ const Verification = () => {
         setUserImage(imageDataUrl);
     }
 
+    const onsubmit = async(e)=>{
+        e.preventDefault();
+
+        const data = fetch(`${host}/`)
+
+    }
 
   return (
     <div className='h-[92vh] flex justify-center items-center bg-image '>
 
-        <form action="" className='bg-[rgba(255,255,255,0.28)] rounded-xl p-8 backdrop-blur-md '>
+        <form onSubmit={onsubmit} className='bg-[rgba(255,255,255,0.28)] rounded-xl p-8 backdrop-blur-md '>
             <h2 className='text-4xl font-bold'>Verify Yourself</h2>
             <p className='text-lg mb-4'>To be able to create rides , it is important to verify yourself wit the platform.</p>
 

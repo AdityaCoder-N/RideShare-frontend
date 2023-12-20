@@ -1,21 +1,40 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import img from '../assets/register-bg.jpg'
-
+import UserContext from '../context/UserContext'
+import Cookies from 'js-cookie'
+import { Link } from 'react-router-dom'
 const SignUp = () => {
 
+    const host='http://localhost:3001'
+    const {setUser} = useContext(UserContext)
     const [credentials,setCredentials] = useState({name:'',email:'',password:'',confirmPassword:''});
 
     const onchange = (e) =>{
-       
-
         setCredentials({...credentials,[e.target.name]:e.target.value});
     }
 
-    const onsubmit=(e)=>{
+    const onsubmit=async(e)=>{
         e.preventDefault();
+
+        if(credentials.password!==credentials.confirmPassword){
+            alert('Passwords do not Match!');
+            setCredentials({...credentials,password:'',confirmPassword:''})
+            return;
+        }
 
         console.log(credentials)
 
+        const response = await fetch(`${host}/auth/register`,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({...credentials})
+        })
+        const data = await response.json();
+        console.log(data)
+        setUser(data.user)
+        Cookies.set('authToken',data.authToken);
         setCredentials({name:'',email:'',password:'',confirmPassword:''})
     }
 
@@ -50,6 +69,7 @@ const SignUp = () => {
             </div>
 
             <button className='bg-[#214264] hover:bg-[#19314a] cursor-pointer text-white py-2 text-lg w-full rounded-xl mt-6' type='submit'>Register</button>
+            <p className='mt-2'> Already Registered? <Link to='/login' className='font-semibold'>Login here</Link> </p>
         </form>
     </div>
   )

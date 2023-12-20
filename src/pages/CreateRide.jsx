@@ -8,7 +8,14 @@ const CreateRide = () => {
     const [source,setSource] = useState('');
     const [destination,setDestination] = useState('');
 
-
+    const onSourceSelect = (feature) => {
+    
+        setSource(feature.place_name);
+    };
+    
+    const onDestinationSelect = (feature) => {
+    setDestination(feature.place_name);
+    };
 
     const onchange=(e)=>{
         console.log(e.target.name)
@@ -24,7 +31,8 @@ const CreateRide = () => {
 
             <div className='flex flex-col gap-1 mt-6'>
                 <label htmlFor="" className='font-semibold ml-1'>Source Location</label>
-                <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw">
+                <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw"
+                onSelect={onSourceSelect}>
                 <input
                     name="source" placeholder="Where will you start from?" type="text"
                     autoComplete="address-line1"
@@ -36,7 +44,7 @@ const CreateRide = () => {
             </div>
             <div className='flex flex-col gap-1 mt-2'>
                 <label htmlFor="" className='font-semibold ml-1'>Destination Location</label>
-                <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw">
+                <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw" onSelect={onDestinationSelect}>
                 <input
                     name="destination" placeholder="Where to?" type="text"
                     autoComplete="address-line1"

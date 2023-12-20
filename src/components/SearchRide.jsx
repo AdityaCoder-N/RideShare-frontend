@@ -14,6 +14,15 @@ const SearchRide = () => {
         console.log(source)
     }
 
+    const onSourceSelect = (feature) => {
+    
+        setSource(feature.place_name);
+    };
+    
+    const onDestinationSelect = (feature) => {
+    setDestination(feature.place_name);
+    };
+
   return (
     <form className='border-2 border-gray-400 rounded-xl p-4' onSubmit={onsubmit}>
         <div className='flex justify-between items-center'>
@@ -22,7 +31,8 @@ const SearchRide = () => {
         </div>
         <div className='relative mt-4'>
             <img src={sourceImg} alt="" className='absolute left-2 top-[50%] translate-y-[-50%]'/>
-            <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw">
+            <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw"
+            onSelect={onSourceSelect}>
                 <input
                     name="address" placeholder="Source Location" type="text"
                     autoComplete="address-line1"
@@ -34,7 +44,8 @@ const SearchRide = () => {
         </div>
         <div className='relative mt-4'>
             <img src={dest} alt="" className='absolute left-2 top-[50%] translate-y-[-50%]'/>
-            <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw">
+            <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw"
+            onSelect={onDestinationSelect}>
                 <input
                     name="address" placeholder="Destination Location" type="text"
                     autoComplete="address-line1"

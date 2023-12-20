@@ -26,7 +26,8 @@ const SingleRide = ()=>{
                 <div>To - Mussourie,Dehradun asdasda</div>
 
             </div>
-            <button className='bg-black text-white rounded-xl py-1 w-full mt-3 cursor-pointer' onClick={()=>setAccept(true)}>Accept Ride</button>
+            <button className='bg-black text-white rounded-xl py-1 w-full mt-3 cursor-pointer' >View Route</button>
+            <button className='bg-black text-white rounded-xl py-1 w-full mt-2 cursor-pointer' >Accept Ride</button>
 
             {/* {accept && <AcceptRideModal setAccept={setAccept}/>} */}
         </div>

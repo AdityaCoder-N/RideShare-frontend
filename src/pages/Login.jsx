@@ -1,22 +1,45 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState,useContext} from 'react'
 import img from '../assets/register-bg.jpg'
-
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 const Login = () => {
-  const [credentials,setCredentials] = useState({name:'',email:'',password:'',confirmPassword:''});
+   
+    const host='http://localhost:3001'
+    const {setUser} = useContext(UserContext)
+
+    const navigate = useNavigate();
+    const [credentials,setCredentials] = useState({email:'',password:''});
 
     const onchange = (e) =>{
-       
-
         setCredentials({...credentials,[e.target.name]:e.target.value});
     }
 
-    const onsubmit=(e)=>{
+    const onsubmit=async(e)=>{
         e.preventDefault();
 
-        console.log(credentials)
-
+        const response = await fetch(`${host}/auth/login`,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({...credentials})
+        })
+        const data = await response.json();
+        console.log(data)
+        setUser(data.user)
+        Cookies.set('authToken',data.authToken);
         setCredentials({name:'',email:'',password:'',confirmPassword:''})
+
+
+        navigate('/')
     }
+
+    useEffect(()=>{
+        if(Cookies.get('authToken')){
+            navigate('/');
+        }
+    },[])
 
   return (
     <div className='h-[100vh] w-[100%] relative bg-[#2A4D77]'>
