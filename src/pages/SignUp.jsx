@@ -35,6 +35,7 @@ const SignUp = () => {
         console.log(data)
         setUser(data.user)
         Cookies.set('authToken',data.authToken);
+        localStorage.setItem('user',data.user);
         setCredentials({name:'',email:'',password:'',confirmPassword:''})
     }
 

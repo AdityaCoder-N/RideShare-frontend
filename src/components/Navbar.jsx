@@ -22,6 +22,7 @@ const Navbar = () => {
             <Link to="/create-ride">Share Ride</Link>
             <Link to="/">Get Ride</Link>
             <Link to="/verify">Verification</Link>
+            <Link to="/view-requests">View Requests</Link>
             <p onClick={logout} className='cursor-pointer'>Logout</p>
         </div>
     </nav>

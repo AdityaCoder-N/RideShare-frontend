@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import CreateRide from './pages/CreateRide';
 import Verification from './pages/Verification';
+import ViewRequests from './pages/ViewRequests';
 function App() {
   
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/create-ride" element={<CreateRide />} />
           <Route path="/verify" element={<Verification/>} />
+          <Route path="/view-requests" element={<ViewRequests/>} />
           {/* <Route path="/contact" element={<Contact />} /> */}
         </Routes>
       </Router>

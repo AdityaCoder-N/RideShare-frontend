@@ -1,12 +1,15 @@
 import React,{useRef, useState,useContext} from 'react'
 import close from '../assets/x-circle-fill.svg'
 import UserContext from '../context/UserContext'
+import Cookies from 'js-cookie'
 
 const Verification = () => {
 
+    const {user} = useContext(UserContext)
+    const authToken = Cookies.get('authToken');
     const host='http://localhost:3001'
 
-    const [formData,setFormData]=useState({name:'',dob:"",dlNumber:''})
+    const [formData,setFormData]=useState({name:'',dob:"",dlNumber:'',state:''})
     const [userImage,setUserImage] = useState('');
     const onchange = (e)=>{
        
@@ -15,6 +18,7 @@ const Verification = () => {
 
     const [show,setShow] = useState(false)
 
+    let dlPhoto = useRef(null)
     let videoRef = useRef(null);
     let photoRef= useRef(null);
     const openCam = ()=>{
@@ -44,6 +48,17 @@ const Verification = () => {
         setShow(false);
     };
 
+    function dataURItoBlob(dataURI) {
+        var byteString = atob(dataURI.split(',')[1]);
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+      
+        for (var i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+      
+        return new Blob([ab], { type: 'image/jpeg' });
+      }
     const takePicture=()=>{
         let width=300;
         let height=300/(16/9);
@@ -58,22 +73,53 @@ const Verification = () => {
         context.drawImage(video,0,0,photo.width,photo.height);
 
         const imageDataUrl = photo.toDataURL('image/jpeg');
-        console.log(imageDataUrl)
+        const blobData = dataURItoBlob(imageDataUrl);
 
-        setUserImage(imageDataUrl);
+        // Create a File object from the Blob
+        const imageFile = new File([blobData], 'live_image.jpg', { type: 'image/jpeg' });
+
+        setUserImage(imageFile);
     }
 
-    const onsubmit = async(e)=>{
+    const onsubmit = async (e) => {
         e.preventDefault();
+      
+        console.log(dlPhoto.current.files)
+        // Create a FormData object
+        const actualformData = new FormData();
+      
+        // Append form data
+        actualformData.append('name', formData.name);
+        actualformData.append('dob', formData.dob);
+        actualformData.append('lisenceNumber', formData.dlNumber);
+        actualformData.append('id',user._id)
+        actualformData.append('state',formData.state)
+        // console.log(user)
 
-        const data = fetch(`${host}/`)
-
-    }
+        // Append image files
+        actualformData.append('dl_photo', dlPhoto.current.files[0]); 
+        actualformData.append('profile', userImage); 
+      
+        try {
+          const response = await fetch(`${host}/request/make-request`, {
+            method: 'POST',
+            headers:{
+                'auth-token':authToken
+            },
+            body: actualformData,
+          });
+      
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error(error);
+        }
+    };
 
   return (
     <div className='h-[92vh] flex justify-center items-center bg-image '>
 
-        <form onSubmit={onsubmit} className='bg-[rgba(255,255,255,0.28)] rounded-xl p-8 backdrop-blur-md '>
+        <form onSubmit={onsubmit} className='bg-[rgba(255,255,255,0.28)] rounded-xl px-8 py-4 backdrop-blur-md '>
             <h2 className='text-4xl font-bold'>Verify Yourself</h2>
             <p className='text-lg mb-4'>To be able to create rides , it is important to verify yourself wit the platform.</p>
 
@@ -98,6 +144,15 @@ const Verification = () => {
                 
             </div>
             <div className='flex flex-col gap-1 mt-2'>
+                <label htmlFor="" className='font-semibold ml-1'>State</label>
+                <input
+                    name="state" placeholder="Indian State which approved the DL" type="text"
+                    className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
+                    value={formData.state}
+                    onChange={onchange}
+                />
+            </div>
+            <div className='flex flex-col gap-1 mt-2'>
                 <label htmlFor="" className='font-semibold ml-1'>Driving Lisence Number</label>
                 <input
                     name="dlNumber" placeholder="Give correct DL Number for verification" type="text"
@@ -108,7 +163,7 @@ const Verification = () => {
             </div>
             <div className='flex flex-col gap-1 mt-2'>
                 <label htmlFor="" className='font-semibold ml-1'>Driving Lisence Photo</label>
-                <input type="file" />
+                <input type="file" ref={dlPhoto}/>
             </div>
             <div className='flex items-center gap-4 my-4'>
                 <label htmlFor="" className='font-semibold ml-1'>Driver Photo</label>
