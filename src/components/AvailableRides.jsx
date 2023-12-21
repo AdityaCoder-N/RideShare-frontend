@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import car from '../assets/car.jpg'
 import AcceptRideModal from './AcceptRideModal';
 
 
-const SingleRide = ()=>{
+const SingleRide = ({name,seats,from,to,startCoord,endCoord})=>{
 
     const [accept,setAccept] = useState(false);
 
@@ -36,6 +36,29 @@ const SingleRide = ()=>{
 
 
 const AvailableRides = () => {
+
+    const host='http://localhost:3001'
+
+    const [rides,setRides] = useState([]);
+
+    const fetchRides = async() =>{
+        const response = await fetch(`${host}/rides/get-rides`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+
+        const data = await response.json();
+        console.log(data);
+
+    }
+
+    useEffect(()=>{
+
+        fetchRides();
+
+    },[])
   return (
     <div className='rounded-xl border-2 border-gray-500 p-2 mt-2'>
         <h2 className='text-xl font-semibold'>Available Rides</h2>
@@ -43,8 +66,13 @@ const AvailableRides = () => {
         <div className='max-h-[42vh] overflow-y-scroll mt-2'>
 
             <SingleRide/>
-            <SingleRide/>
-            <SingleRide/>
+            {
+            rides.map((ride)=>{
+                return(
+                    <SingleRide />
+                )
+            })    
+            }
         </div>
         
     </div>

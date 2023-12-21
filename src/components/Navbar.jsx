@@ -19,10 +19,11 @@ const Navbar = () => {
             <Link to='/' className='text-2xl'>RideShare</Link>
         </div>
 
-        <div className='w-[30%] flex justify-between items-center'>
+        <div className='w-[40%] flex justify-between items-center'>
             <Link to="/create-ride">Share Ride</Link>
             <Link to="/">Get Ride</Link>
             <Link to="/verify">Verification</Link>
+            <Link to="/ride-status">Ride Status</Link>
             <Link to="/view-requests">View Requests</Link>
             <p onClick={logout} className='cursor-pointer'>Logout</p>
         </div>

@@ -1,12 +1,18 @@
-import React,{useState} from 'react'
-
+import React,{useState,useContext} from 'react'
+import axios from 'axios';
 import { AddressAutofill } from '@mapbox/search-js-react';
-
+import UserContext from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 const CreateRide = () => {
+    
+    const navigate = useNavigate();
+    const token='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw'
 
-    const [formData,setFormData] = useState({departureDate:'',departureTime:'',cost:'',seatsAvailable:''})
+    const [formData,setFormData] = useState({startDate:'',startTime:'',cost:'',seatsAvailable:''})
     const [source,setSource] = useState('');
     const [destination,setDestination] = useState('');
+
+    const {user} = useContext(UserContext)
 
     const onSourceSelect = (feature) => {
     
@@ -22,10 +28,55 @@ const CreateRide = () => {
         console.log(e.target.value)
         setFormData({...formData,[e.target.name]:e.target.value})
     }
+
+    const getCoordinates=async(location)=>{
+        
+        const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${token}`)
+        const data = await res.json();
+        // console.log(data);
+    
+        const searched = data.features[0].center;
+        // console.log("searched coordinates : ",searched)
+        return searched
+    }
+
+    const host='http://localhost:3001'
+
+    const onsubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+            // Use Promise.all to wait for both asynchronous functions to complete
+            const [sourceCoord, destinationCoord] = await Promise.all([
+                getCoordinates(source),
+                getCoordinates(destination)
+            ]);
+    
+            const postedBy = user._id;
+    
+            console.log(sourceCoord, destinationCoord);
+    
+            axios.post(`${host}/ride/create-ride`,
+                { ...formData, sourceCoord, destinationCoord, postedBy,source,destination }
+            ).then((res)=>{
+                if(res.data.success){
+                    alert('Ride created Successfully');
+                    console.log(res);
+                    navigate('/create-ride');
+                }
+            }).catch((err)=>{
+                alert(err.response.data.message)
+            })
+            
+        } catch (error) {
+            console.error('Error during submit:', error);
+        }
+    };
+
   return (
     <div className='h-[92vh] flex justify-center items-center bg-image '>
 
-        <form action="" className='bg-[rgba(255,255,255,0.28)] rounded-xl p-8 backdrop-blur-md '>
+        <form action="" className='bg-[rgba(255,255,255,0.28)] rounded-xl p-8 backdrop-blur-md ' onSubmit={onsubmit}>
             <h2 className='text-4xl font-bold'>Create a Ride!</h2>
             <p className='text-lg mb-4'>Help other civillians reach their destination by sharing your ride.</p>
 
@@ -58,9 +109,9 @@ const CreateRide = () => {
                 <label htmlFor="" className='font-semibold ml-1'>Departure Date</label>
                 
                 <input
-                    name="departureDate" placeholder="Enter valid date" type="date"
+                    name="startDate" placeholder="Enter valid date" type="date"
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
-                    value={formData.departureDate}
+                    value={formData.startDate}
                     onChange={onchange}
                 />
                 
@@ -69,9 +120,9 @@ const CreateRide = () => {
                 <label htmlFor="" className='font-semibold ml-1'>Departure Time</label>
                 
                 <input
-                    name="departureTime" placeholder="Enter valid Time" type="time"
+                    name="startTime" placeholder="Enter valid Time" type="time"
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
-                    value={formData.departureTime}
+                    value={formData.startTime}
                     onChange={onchange}
                 />
                 

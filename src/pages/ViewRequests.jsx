@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import img from '../assets/register-bg.jpg'
 
-const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob})=>{
+const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob,id , setRequests,requests})=>{
     const host='http://localhost:3001'
     
     const convertPath=(path)=>{
@@ -18,14 +18,20 @@ const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob})=>{
     const finaldlPhoto = convertPath(dlPhoto);
 
     const acceptRequest = async()=>{
-        const response = await fetch(`${host}/admin/unverified-requests`,{
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            }
+
+        const response = await fetch(`${host}/admin/verify-request/${id}`,{
+            method:'GET'
         });
 
         const data =  await response.json()
+
+        console.log(data)
+        if(!data.success){
+            alert(data.message);
+        }
+        else{
+            setRequests(requests.filter(ele=>ele._id!=id));
+        }
 
     }
 
@@ -50,7 +56,7 @@ const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob})=>{
             <div className='font-semibold'>User DL Number - {dlNumber}</div>
             <div className='font-semibold'>User DOB - {dob}</div>
             
-            <button className='mt-4 py-2 px-4 w-full bg-slate-800 text-white rounded-md'>Accept Request</button>
+            <button className='mt-4 py-2 px-4 w-full bg-slate-800 text-white rounded-md' onClick={acceptRequest}>Accept Request</button>
         </div>
 
     )
@@ -89,14 +95,16 @@ const ViewRequests = () => {
         <h2 className='text-xl font-semibold text-white'>Viewing User's Verification Requests</h2>
 
         <div className='grid grid-cols-3 gap-4 gap-x-4 p-4 px-12 max-h-[80vh] overflow-y-scroll mt-4'>
+        
         {
+            requests.length!==0?
             requests.map((request)=>{
 
                 return (
-                    <SingleRequest name={request.name} userPhoto={request.profilePhotoUrl} dlPhoto={request.dlPhotoUrl} dlNumber={request.lisenceNumber} dob={request.dob} state={request.state} key={request._id}/>
+                    <SingleRequest name={request.name} userPhoto={request.profilePhotoUrl} dlPhoto={request.dlPhotoUrl} dlNumber={request.lisenceNumber} dob={request.dob} state={request.state} id={request._id} key={request._id} setRequests={setRequests} requests={requests}/>
                 )
 
-            })
+            }):<h2 className='text-gray-400 font-semibold text-center text-xl absolute left-[50%] translate-x-[-50%]'>No Requests Found</h2>
         }
             
         </div>

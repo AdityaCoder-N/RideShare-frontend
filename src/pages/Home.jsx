@@ -6,8 +6,8 @@ import AvailableRides from '../components/AvailableRides'
 
 const Home = () => {
 
-  const [startCoord,setStartCoord] = useState([-122.662323, 45.523751]);
-  const [endCoord,setEndCoord] = useState([-84.512023, 39.102779])
+  const [startCoord,setStartCoord] = useState([78.032188,30.316496]);
+  const [endCoord,setEndCoord] = useState([77.10068000,28.65655000])
 
   return (
     <div>
@@ -18,7 +18,7 @@ const Home = () => {
                 <AvailableRides setStartCoord={setStartCoord} setEndCoord={setEndCoord}/>
             </div>
             <div className='w-[70%] p-4 z-1'>
-                <MapSection startCoord={startCoord} endCoord={endCoord}   />
+                {/* <MapSection startCoord={startCoord} endCoord={endCoord}   /> */}
             </div>
         </div>
     </div>
