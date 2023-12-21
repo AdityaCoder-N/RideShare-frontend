@@ -14,16 +14,16 @@ const SingleRide = ({name,seats,from,to,startCoord,endCoord})=>{
                     <img src={car} alt="" className='h-full w-full object-cover'/>
                 </div>
                 <div className='w-[70%]'>
-                    <div className='font-semibold'>Rider Name - Aditya</div>
+                    <div className='font-semibold'>Rider Name - {name}</div>
                     <div className='font-semibold'>Cost - 450 coins</div>
-                    <div className='font-semibold'>Seats Available - 2</div>
+                    <div className='font-semibold'>Seats Available - {seats}</div>
 
                 </div>
             </div>
             <div className='flex justify-between font-semibold mt-2'>
 
-                <div>From - Rajpur,Dehradun</div>
-                <div>To - Mussourie,Dehradun asdasda</div>
+                <div>From - {from}</div>
+                <div>To - {to}</div>
 
             </div>
             <button className='bg-black text-white rounded-xl py-1 w-full mt-3 cursor-pointer' >View Route</button>
@@ -35,30 +35,8 @@ const SingleRide = ({name,seats,from,to,startCoord,endCoord})=>{
 }
 
 
-const AvailableRides = () => {
+const AvailableRides = ({rides}) => {
 
-    const host='http://localhost:3001'
-
-    const [rides,setRides] = useState([]);
-
-    const fetchRides = async() =>{
-        const response = await fetch(`${host}/rides/get-rides`,{
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            },
-        })
-
-        const data = await response.json();
-        console.log(data);
-
-    }
-
-    useEffect(()=>{
-
-        fetchRides();
-
-    },[])
   return (
     <div className='rounded-xl border-2 border-gray-500 p-2 mt-2'>
         <h2 className='text-xl font-semibold'>Available Rides</h2>
@@ -67,9 +45,9 @@ const AvailableRides = () => {
 
             <SingleRide/>
             {
-            rides.map((ride)=>{
+            rides.map((ride,index)=>{
                 return(
-                    <SingleRide />
+                    <SingleRide name={ride.postedBy.name} seats={ride.seatsAvailable} from={ride.source} to={ride.destination} startCoord={ride.sourceCoord} endCoord={ride.destinationCoord} key={index}/>
                 )
             })    
             }

@@ -7,15 +7,17 @@ import AvailableRides from '../components/AvailableRides'
 const Home = () => {
 
   const [startCoord,setStartCoord] = useState([78.032188,30.316496]);
-  const [endCoord,setEndCoord] = useState([77.10068000,28.65655000])
+  const [endCoord,setEndCoord] = useState([77.10068000,28.65655000]);
+
+  const [rides,setRides] = useState([])
 
   return (
     <div>
         <div className='flex'>
             <div className='w-[30%] p-4'>
-                <SearchRide/>
+                <SearchRide setRides={setRides}/>
 
-                <AvailableRides setStartCoord={setStartCoord} setEndCoord={setEndCoord}/>
+                <AvailableRides setStartCoord={setStartCoord} setEndCoord={setEndCoord} rides={rides}/>
             </div>
             <div className='w-[70%] p-4 z-1'>
                 {/* <MapSection startCoord={startCoord} endCoord={endCoord}   /> */}

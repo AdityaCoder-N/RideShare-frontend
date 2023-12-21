@@ -4,8 +4,8 @@ import dest from '../assets/destination.svg'
 import { AddressAutofill } from '@mapbox/search-js-react';
 
 
-const SearchRide = () => {
-
+const SearchRide = ({setRides}) => {
+    const host='http://localhost:3001'
     const [source,setSource] = useState('');
     const [destination,setDestination] = useState('');
 
@@ -15,13 +15,30 @@ const SearchRide = () => {
     }
 
     const onSourceSelect = (feature) => {
-    
         setSource(feature.place_name);
     };
     
     const onDestinationSelect = (feature) => {
     setDestination(feature.place_name);
     };
+
+    const getRides=async()=>{
+
+        const response = await fetch(`${host}/ride/get-rides`,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+
+        const data = await response.json();
+        console.log(data);
+
+        if(data.success){
+            setRides(data.rides);
+        }
+
+    }
 
   return (
     <form className='border-2 border-gray-400 rounded-xl p-4' onSubmit={onsubmit}>
@@ -56,7 +73,7 @@ const SearchRide = () => {
             </AddressAutofill>
         </div>
 
-        <button className='py-3 px-2 pl-8 w-full rounded-xl outline-none bg-black text-white mt-4 text-lg' type='submit'>Search</button>
+        <button className='py-3 px-2 pl-8 w-full rounded-xl outline-none bg-black text-white mt-4 text-lg' type='submit' onClick={getRides}>Search</button>
         
     </form>
   )
