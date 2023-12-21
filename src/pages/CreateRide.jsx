@@ -4,7 +4,7 @@ import { AddressAutofill } from '@mapbox/search-js-react';
 
 const CreateRide = () => {
 
-    const [formData,setFormData] = useState({departureDate:'',departureTime:'',cost:''})
+    const [formData,setFormData] = useState({departureDate:'',departureTime:'',cost:'',seatsAvailable:''})
     const [source,setSource] = useState('');
     const [destination,setDestination] = useState('');
 
@@ -72,6 +72,17 @@ const CreateRide = () => {
                     name="departureTime" placeholder="Enter valid Time" type="time"
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.departureTime}
+                    onChange={onchange}
+                />
+                
+            </div>
+            <div className='flex flex-col gap-1 mt-2'>
+                <label htmlFor="" className='font-semibold ml-1'>Seats Available</label>
+                
+                <input
+                    name="seatsAvailable" placeholder="Enter Number of seats available" type="number"
+                    className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
+                    value={formData.seatsAvailable}
                     onChange={onchange}
                 />
                 

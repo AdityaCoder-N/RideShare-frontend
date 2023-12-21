@@ -9,7 +9,8 @@ const UserContextProvider = ({children}) =>{
 
         const loggedUser = localStorage.getItem('user');
         if(loggedUser){
-            setUser(loggedUser);
+            const parsed = JSON.parse(loggedUser);
+            setUser(parsed);
         }
 
     },[])

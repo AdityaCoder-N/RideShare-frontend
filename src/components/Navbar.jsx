@@ -10,6 +10,7 @@ const Navbar = () => {
   const logout = () =>{
     setUser(null);
     Cookies.remove('authToken');
+    localStorage.clear();
     navigate('/login');
   }
   return (

@@ -95,28 +95,30 @@ const Verification = () => {
         actualformData.append('id',user._id)
         actualformData.append('state',formData.state)
         // console.log(user)
-
+        
         // Append image files
         actualformData.append('dl_photo', dlPhoto.current.files[0]); 
         actualformData.append('profile', userImage); 
-      
+        
+        console.log(user)
+        
         try {
-          const response = await fetch(`${host}/request/make-request`, {
-            method: 'POST',
-            headers:{
-                'auth-token':authToken
-            },
-            body: actualformData,
-          });
-      
-          const data = await response.json();
-          console.log(data);
+            const response = await fetch(`${host}/request/make-request`, {
+                method: 'POST',
+                headers:{
+                    'auth-token':authToken
+                },
+                body: actualformData,
+            });
+            
+            const data = await response.json();
+            console.log(data);
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
     };
-
-  return (
+    
+    return (
     <div className='h-[92vh] flex justify-center items-center bg-image '>
 
         <form onSubmit={onsubmit} className='bg-[rgba(255,255,255,0.28)] rounded-xl px-8 py-4 backdrop-blur-md '>

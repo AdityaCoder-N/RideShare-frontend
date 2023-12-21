@@ -29,7 +29,8 @@ const Login = () => {
         console.log(data)
         setUser(data.user)
         Cookies.set('authToken',data.authToken);
-        localStorage.setItem('user',data.user);
+        
+        localStorage.setItem('user',JSON.stringify(data.user));
 
 
         setCredentials({name:'',email:'',password:'',confirmPassword:''})
