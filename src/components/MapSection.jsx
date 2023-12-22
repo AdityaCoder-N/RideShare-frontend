@@ -21,7 +21,7 @@ const MapSection = ({startCoord,endCoord}) => {
     );
 
     const data = await response.json();
-    console.log("response data:",data)
+    // console.log("response data:",data)
 
     if(data.code=="InvalidInput"){
       alert(data.message);
@@ -30,7 +30,7 @@ const MapSection = ({startCoord,endCoord}) => {
 
     const temp_route = data.routes[0].geometry.coordinates;
     // Check if temp_route is an array of arrays
-    console.log("receive array : ", temp_route)
+    // console.log("receive array : ", temp_route)
 
     
     setRoute(temp_route);
@@ -38,7 +38,7 @@ const MapSection = ({startCoord,endCoord}) => {
 
   useEffect(()=>{
 
-    console.log("coordinates received in map : ",startCoord,endCoord)
+    // console.log("coordinates received in map : ",startCoord,endCoord)
     getRoute();
    
   },[startCoord,endCoord])

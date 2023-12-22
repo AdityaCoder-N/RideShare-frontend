@@ -2,9 +2,11 @@ import React,{useState,useContext} from 'react'
 import img from '../assets/register-bg.jpg'
 import UserContext from '../context/UserContext'
 import Cookies from 'js-cookie'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
 const SignUp = () => {
 
+    const navigate = useNavigate();
     const host='http://localhost:3001'
     const {setUser} = useContext(UserContext)
     const [credentials,setCredentials] = useState({name:'',email:'',password:'',confirmPassword:''});
@@ -33,10 +35,9 @@ const SignUp = () => {
         })
         const data = await response.json();
         console.log(data)
-        setUser(data.user)
-        Cookies.set('authToken',data.authToken);
-        localStorage.setItem('user',JSON.stringify(data.user));
+        
         setCredentials({name:'',email:'',password:'',confirmPassword:''})
+        navigate('/login');
     }
 
   return (

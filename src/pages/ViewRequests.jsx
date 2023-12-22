@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom'
 
 const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob,id , setRequests,requests})=>{
 
-    const {user}=useContext(UserContext)
-    const navigate= useNavigate();
 
     const host='http://localhost:3001'
     
@@ -38,11 +36,7 @@ const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob,id , setRequests
         }
 
     }
-    useEffect(()=>{
-        if(!user?.isAdmin){
-            navigate('/');
-        }
-    },[])
+    
 
     return (
         <div className='bg-gray-400 rounded-md p-4 flex flex-col gap-2 h-[450px]'>
@@ -74,6 +68,10 @@ const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob,id , setRequests
 
 
 const ViewRequests = () => {
+    
+    const {user}=useContext(UserContext)
+    const navigate= useNavigate();
+    
     const host='http://localhost:3001'
 
     const [requests,setRequests] = useState([]);
@@ -94,7 +92,12 @@ const ViewRequests = () => {
 
     useEffect(()=>{
 
-
+       
+        console.log("view request me user : ",user)
+        // if(!user?.isAdmin){
+        //     navigate('/');
+        // }
+    
 
         fetchRequests();
         

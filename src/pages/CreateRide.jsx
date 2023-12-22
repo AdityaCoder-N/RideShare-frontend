@@ -74,7 +74,7 @@ const CreateRide = () => {
     
             const postedBy = user._id;
     
-            const cost =Math.round(calculateDistance(sourceCoord,destinationCoord)*13.5);
+            const cost =Math.round(calculateDistance(sourceCoord,destinationCoord)*2.5);
     
             axios.post(`${host}/ride/create-ride`,
                 { ...formData, sourceCoord, destinationCoord, postedBy,source,destination,cost }
