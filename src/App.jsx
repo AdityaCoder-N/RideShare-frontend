@@ -1,5 +1,5 @@
-import React from 'react'
-import './App.css'
+import React from 'react';
+import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
@@ -11,28 +11,39 @@ import ViewRequests from './pages/ViewRequests';
 import RidesStatus from './pages/RidesStatus';
 import AcceptRide from './pages/AcceptRide';
 import AdminLogin from './pages/AdminLogin';
-function App() {
 
+function App() {
   return (
     <div>
       <Router>
-        <Navbar/>
+        {/* Navbar is rendered conditionally */}
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* Public routes without Navbar */}
           <Route path="/login" element={<Login />} />
           <Route path="/admin-login" element={<AdminLogin />} />
-
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/create-ride" element={<CreateRide />} />
-          <Route path="/verify" element={<Verification/>} />
-          <Route path="/view-requests" element={<ViewRequests/>} />
-          <Route path="/ride-status" element={<RidesStatus/>} />
-          <Route path="/accept-ride/:id" element={<AcceptRide/>} />
-
+          
+          {/* Routes with Navbar */}
+          <Route
+            path="/*"
+            element={
+              <>
+                <Navbar />
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/create-ride" element={<CreateRide />} />
+                  <Route path="/verify" element={<Verification />} />
+                  <Route path="/view-requests" element={<ViewRequests />} />
+                  <Route path="/ride-status" element={<RidesStatus />} />
+                  <Route path="/accept-ride/:id" element={<AcceptRide />} />
+                </Routes>
+              </>
+            }
+          />
         </Routes>
       </Router>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

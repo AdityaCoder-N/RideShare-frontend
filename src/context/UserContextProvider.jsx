@@ -8,6 +8,8 @@ const UserContextProvider = ({children}) =>{
     useEffect(()=>{
 
         const loggedUser = localStorage.getItem('user');
+
+        console.log("context provider ke andar user : ",loggedUser);
         if(loggedUser){
             const parsed = JSON.parse(loggedUser);
             setUser(parsed);

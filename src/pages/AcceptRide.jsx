@@ -64,9 +64,10 @@ const AcceptRide = () => {
             alert('Changes will be reflected in Ride Status')
             navigate('/');
         }).catch((err)=>{
-            alert(err.response.data.message)
+            console.log(err)
+            alert(err.response.data.error)
         })
-
+      
     }
     const cancel = async()=>{
         navigate('/');

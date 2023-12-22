@@ -9,7 +9,7 @@ const Verification = () => {
     const authToken = Cookies.get('authToken');
     const host='http://localhost:3001'
 
-    const [formData,setFormData]=useState({name:'',dob:"",dlNumber:'',state:''})
+    const [formData,setFormData]=useState({name:'',dob:"",dlNumber:'',state:'',contact:''})
     const [userImage,setUserImage] = useState(null);
     const onchange = (e)=>{
        
@@ -99,6 +99,7 @@ const Verification = () => {
         actualformData.append('lisenceNumber', formData.dlNumber);
         actualformData.append('id',user._id)
         actualformData.append('state',formData.state)
+        actualformData.append('contact',formData.contact)
         // console.log(user)
         
         // Append image files
@@ -126,11 +127,11 @@ const Verification = () => {
     return (
     <div className='h-[92vh] flex justify-center items-center bg-image '>
 
-        <form onSubmit={onsubmit} className='bg-[rgba(255,255,255,0.28)] rounded-xl px-8 py-4 backdrop-blur-md '>
+        <form onSubmit={onsubmit} className='bg-[rgba(255,255,255,0.28)] rounded-xl px-4 py-4 backdrop-blur-md '>
             <h2 className='text-4xl font-bold'>Verify Yourself</h2>
             <p className='text-lg mb-4'>To be able to create rides , it is important to verify yourself wit the platform.</p>
 
-            <div className='flex flex-col gap-1 mt-6'>
+            <div className='flex flex-col gap-1 mt-3'>
                 <label htmlFor="" className='font-semibold ml-1'>Name</label>
                 <input
                     name="name" placeholder="As per your Govt. ID" type="text"
@@ -147,6 +148,18 @@ const Verification = () => {
                     name="dob" placeholder="Enter valid date" type="date"
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.dob}
+                    onChange={onchange}
+                    required
+                />
+                
+            </div>
+            <div className='flex flex-col gap-1 mt-2'>
+                <label htmlFor="" className='font-semibold ml-1'>Contact Number</label>
+                
+                <input
+                    name="contact" placeholder="Enter valid date" type="number"
+                    className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
+                    value={formData.contact}
                     onChange={onchange}
                     required
                 />

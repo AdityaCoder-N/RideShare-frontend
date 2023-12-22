@@ -18,7 +18,7 @@ const Home = () => {
 
       let coords=[longitude,latitude];
 
-      console.log(coords)
+      // console.log(coords)
       setStartCoord(coords);
       setEndCoord(coords);
     })

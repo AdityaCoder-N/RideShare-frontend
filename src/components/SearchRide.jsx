@@ -11,7 +11,7 @@ const SearchRide = ({setRides}) => {
 
     const onsubmit = async(e)=>{
         e.preventDefault();
-        console.log(source)
+        // console.log(source)
     }
 
     const onSourceSelect = (feature) => {
@@ -32,7 +32,7 @@ const SearchRide = ({setRides}) => {
         })
 
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         if(data.success){
             setRides(data.rides);

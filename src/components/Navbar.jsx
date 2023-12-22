@@ -11,13 +11,13 @@ const Navbar = () => {
   const [admin,setAdmin]=useState(false);
 
   useEffect(()=>{
-    // console.log("navbar me user : ",user)
-    // if(user==null){
-    //   navigate('/login')
-    // }
-    // if(user.isAdmin==true){
-    //   setAdmin(true);
-    // }
+    console.log("navbar me user : ",user)
+    if(user==null){
+      navigate('/login')
+    }
+    else if(user.isAdmin==true){
+      setAdmin(true);
+    }
   },[])
 
   const logout = () =>{
