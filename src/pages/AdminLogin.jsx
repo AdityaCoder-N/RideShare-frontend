@@ -3,7 +3,7 @@ import img from '../assets/register-bg.jpg'
 import Cookies from 'js-cookie';
 import { Link, useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
-const Login = () => {
+const AdminLogin = () => {
    
     const host='http://localhost:3001'
     const {setUser} = useContext(UserContext)
@@ -18,7 +18,7 @@ const Login = () => {
     const onsubmit=async(e)=>{
         e.preventDefault();
 
-        const response = await fetch(`${host}/auth/login`,{
+        const response = await fetch(`${host}/admin/login`,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -32,7 +32,6 @@ const Login = () => {
             alert(data.error);
             return;
         }
-
         setUser(data.user)
         Cookies.set('authToken',data.authToken);
         
@@ -42,7 +41,7 @@ const Login = () => {
         setCredentials({name:'',email:'',password:'',confirmPassword:''})
 
 
-        navigate('/')
+        navigate('/view-requests')
     }
 
     useEffect(()=>{
@@ -62,14 +61,14 @@ const Login = () => {
         <form className='p-8 w-[30%] bg-white rounded-xl z-50 absolute right-[10%] top-[50%] translate-y-[-50%]' onSubmit={onsubmit}>
 
             <div className='flex justify-between items-center'>
-                <h2 className='font-bold text-3xl'>Login</h2>
+                <h2 className='font-bold text-3xl'>Admin Login</h2>
                 <div className='flex gap-2'>
                     <Link to='/login'>User</Link>
                     <div>/</div>
                     <Link to='/admin-login'>Admin</Link>
                 </div>
             </div>
-            <p className='mb-8 mt-2 text-gray-500 font-semibold'>Ready for the ride of a lifetime? Register now and let the journey begin! </p>
+            <p className='mb-8 mt-2 text-gray-500 font-semibold'>Login to use admin features</p>
 
             
             <div className='flex flex-col gap-1 mt-2'>
@@ -82,11 +81,11 @@ const Login = () => {
             </div>
             
             <button className='bg-[#214264] hover:bg-[#19314a] cursor-pointer text-white py-2 text-lg w-full rounded-xl mt-6 ' type='submit'>Login</button>
-            <p className='mt-4 text-center'> Already have an account? <Link to='/register' className='font-semibold'>Register here</Link> </p>
+            <p className='mt-4 text-center'> Don't have an account? <Link to='/register' className='font-semibold'>Register here</Link> </p>
             
         </form>
     </div>
   )
 }
 
-export default Login
+export default AdminLogin

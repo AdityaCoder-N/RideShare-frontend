@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import img from '../assets/register-bg.jpg'
 
+import UserContext from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
+
 const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob,id , setRequests,requests})=>{
+
+    const {user}=useContext(UserContext)
+    const navigate= useNavigate();
+
     const host='http://localhost:3001'
     
     const convertPath=(path)=>{
 
         const normalizedPath = path.replace(/\\/g, '/');
-
         const finalPath = `${host}/${normalizedPath}`;
-
         return finalPath;
 
     }
-
     const finalUserPhoto = convertPath(userPhoto);
     const finaldlPhoto = convertPath(dlPhoto);
 
@@ -34,6 +38,11 @@ const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob,id , setRequests
         }
 
     }
+    useEffect(()=>{
+        if(!user?.isAdmin){
+            navigate('/');
+        }
+    },[])
 
     return (
         <div className='bg-gray-400 rounded-md p-4 flex flex-col gap-2 h-[450px]'>
@@ -84,6 +93,8 @@ const ViewRequests = () => {
     }
 
     useEffect(()=>{
+
+
 
         fetchRequests();
         
