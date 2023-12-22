@@ -70,7 +70,7 @@ const SignUp = () => {
             </div>
 
             <button className='bg-[#214264] hover:bg-[#19314a] cursor-pointer text-white py-2 text-lg w-full rounded-xl mt-6' type='submit'>Register</button>
-            <p className='mt-2'> Already Registered? <Link to='/login' className='font-semibold'>Login here</Link> </p>
+            <p className='mt-2 text-center'> Already Registered? <Link to='/login' className='font-semibold'>Login here</Link> </p>
         </form>
     </div>
   )

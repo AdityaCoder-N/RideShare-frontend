@@ -10,8 +10,9 @@ import Verification from './pages/Verification';
 import ViewRequests from './pages/ViewRequests';
 import RidesStatus from './pages/RidesStatus';
 import AcceptRide from './pages/AcceptRide';
+import AdminLogin from './pages/AdminLogin';
 function App() {
-  
+
   return (
     <div>
       <Router>
@@ -19,6 +20,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
+
           <Route path="/signup" element={<SignUp />} />
           <Route path="/create-ride" element={<CreateRide />} />
           <Route path="/verify" element={<Verification/>} />
