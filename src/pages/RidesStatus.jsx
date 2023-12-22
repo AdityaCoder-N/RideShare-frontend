@@ -12,6 +12,7 @@ const RidesStatus = () => {
     const {user} = useContext(UserContext)
   const [rideShared, setRideShared] = useState(true);
   const [RideSharedList, setRideSharedList] = useState([]);
+  const [RideTakenList, setRideTakenList] = useState([]);
   const [selectedAction, setSelectedAction] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("Pending");
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -25,22 +26,47 @@ const RidesStatus = () => {
     console.log(selectedStatus);
     setDropdownVisible(false);
   };
+
+  const getRideTaken = ()=>{
+    let u = JSON.parse(localStorage.getItem("user"));
+    axios.get(`http://localhost:3001/ride/ride-taken-status/${u._id}`).then((response)=>{
+        console.log("31.........." , response );
+        setRideTakenList(response.data.rides);
+    }).catch((error)=>{
+        console.log(error);
+    })
+  }
+
+  const rideCompleteHandler = (id)=>{
+    axios.get(`http://localhost:3001/ride/ride-complete/${id}`).then((response)=>{
+        if(response.status === 200)
+        {
+            getRideShared();
+        }
+    }).catch((error)=>{
+        console.log(error);
+    })
+  }
+
+
+  const getRideShared = () => {
+    console.log(user , 30)
+    let u = JSON.parse(localStorage.getItem("user"));
+  axios
+    .get(
+      `http://localhost:3001/ride/ride-shared-status/${u._id}`
+    )
+    .then((response) => {
+      console.log(response);
+      setRideSharedList(response.data.rides);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
   useEffect(() => {
-    const fetch = () => {
-        console.log(user , 30)
-      axios
-        .get(
-          "http://localhost:3001/ride/ride-shared-status/658334622d19a60daf3c5ab9"
-        )
-        .then((response) => {
-          console.log(response);
-          setRideSharedList(response.data.rides);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-    fetch();
+   
+    getRideShared();
   }, []);
 
   return (
@@ -50,6 +76,7 @@ const RidesStatus = () => {
           className="border-2 hover:border-blue-700 bg-yellow-500 p-2 hover:text-black hover:bg-blue-300"
           onClick={() => {
             setRideShared(true);
+            getRideShared();
           }}
         >
           {" "}
@@ -59,6 +86,7 @@ const RidesStatus = () => {
           className="border-2 hover:border-blue-700 bg-yellow-500 p-2 hover:text-black hover:bg-blue-300"
           onClick={() => {
             setRideShared(false);
+            getRideTaken();
           }}
         >
           {" "}
@@ -73,7 +101,7 @@ const RidesStatus = () => {
           <div className="container mx-auto mt-8">
             <div className="bg-white  shadow-md rounded-lg">
               {/* Table Header */}
-              <div className="grid grid-cols-6 border-b border-gray-200 p-4 font-bold">
+              <div className="grid grid-cols-6 border-b border-gray-200 p-4 gap-5 font-bold">
                 <div className="col-span-1">Source</div>
                 <div className="col-span-1">Destination</div>
                 <div className="col-span-1">Accepted By</div>
@@ -85,11 +113,11 @@ const RidesStatus = () => {
               {/* Table Body (Sample Data) */}
               {RideSharedList.map((r, index) => {
                 return (
-                  <div key={index} className="grid grid-cols-6 p-4">
+                  <div key={index} className="grid grid-cols-6 p-4 gap-5">
                     <div className="col-span-1">{r.source}</div>
                     <div className="col-span-1">{r.destination}</div>
                     {r.acceptedBy && (
-                      <div className="col-span-1">{r.acceptedBy}</div>
+                      <div className="col-span-1">{r.acceptedBy.name}</div>
                     )}
                     {!r.acceptedBy && <div className="col-span-1">---</div>}
                     <div className="col-span-1">{r.startTime}</div>
@@ -129,7 +157,7 @@ const RidesStatus = () => {
                           {r.status === "ACTIVE" && (
                             <button
                               className="bg-blue-500 text-white px-4 py-2 rounded"
-                              onClick={handleEditClick}
+                              onClick={rideCompleteHandler(r._id)}
                             >
                               Completed
                             </button>
@@ -151,26 +179,55 @@ const RidesStatus = () => {
             Rides I am Taking
           </h1>
 
-          <div className="bg-slate-400 rounded-md p-4">
-            <div className="grid grid-cols-5 gap-4 text-xl mb-4 font-bold">
-              <div>Locations</div>
-              <div>Accepted By</div>
-              <div>Departure Time</div>
-              <div>Cost</div>
-              <div className="flex justify-end">Status</div>
-            </div>
-
-            <div className="flex flex-col gap-2  p-2 h-[30vh] max-h-[28vh] overflow-y-scroll scroll-hide">
-              <div className="grid grid-cols-5 gap-4 text-xl bg-slate-600 p-4 rounded-lg text-white">
-                <div>
-                  <div>From - Chandigarh</div>
-                  <div>To - Dehradun</div>
-                </div>
-                <div>Accepted/Not Accepted</div>
-                <div>3:00pm</div>
-                <div>349</div>
-                <div className="flex justify-end">Active/Pending/Completed</div>
+          <div className="container mx-auto mt-8">
+            <div className="bg-white  shadow-md rounded-lg">
+              {/* Table Header */}
+              <div className="grid grid-cols-6 gap-5 border-b border-gray-200 p-4 font-bold">
+                <div className="col-span-1">Source</div>
+                <div className="col-span-1">Destination</div>
+                <div className="col-span-1">Provided By</div>
+                <div className="col-span-1">Departure Time</div>
+                <div className="col-span-1 ">Cost</div>
+                <div className="col-span-1 ">Status</div>
+           
               </div>
+               
+              {/* Table Body (Sample Data) */}
+              {RideTakenList.map((r, index) => {
+                return (
+                  <div key={index} className="grid grid-cols-6 gap-5 p-4">
+                    <div className="col-span-1">{r.source}</div>
+                    <div className="col-span-1">{r.destination}</div>
+                    {r.postedBy && (
+                      <div className="col-span-1">{r.postedBy.name}</div>
+                    )}
+                    {!r.postedBy && <div className="col-span-1">---</div>}
+                    <div className="col-span-1">{r.startTime}</div>
+                    <div className="col-span-1">{r.cost}</div>
+                    <div className="col-span-1 flex">
+                      {r.status === "PENDING" && (
+                        <span className="text-yellow-500 font-bold ">
+                          {" "}
+                          Pending{" "}
+                        </span>
+                      )}
+                      {r.status === "ACTIVE" && (
+                        <span className="text-green-500 font-bold ">
+                          {" "}
+                          Active{" "}
+                        </span>
+                      )}
+                      {r.status === "COMPLETED" && (
+                        <span className="text-red-500 font-bold ">
+                          {" "}
+                          Completed{" "}
+                        </span>
+                      )}
+                    </div>
+                  
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
