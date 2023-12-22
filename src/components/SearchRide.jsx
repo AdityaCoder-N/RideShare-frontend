@@ -56,6 +56,7 @@ const SearchRide = ({setRides}) => {
                     className='py-3 px-2 pl-8 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={source}
                     onChange={(e)=>setSource(e.target.value)}
+                    required
                 />
             </AddressAutofill>
         </div>
@@ -69,6 +70,7 @@ const SearchRide = ({setRides}) => {
                     className='py-3 px-2 pl-8 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={destination}
                     onChange={(e)=>setDestination(e.target.value)}
+                    required
                 />
             </AddressAutofill>
         </div>

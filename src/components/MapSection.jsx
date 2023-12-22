@@ -7,26 +7,41 @@ const MapSection = ({startCoord,endCoord}) => {
 
   const [route,setRoute] = useState([])
 
-  
-
-
   const getRoute = async()=>{
   
+    setViewState({
+      latitude: startCoord[1],
+      longitude: startCoord[0],
+      zoom: 14,
+    })
+
     const response = await fetch(
-      `https://api.mapbox.com/directions/v5/mapbox/cycling/${startCoord[0]},${startCoord[1]};${endCoord[0]},${endCoord[1]}?steps=true&geometries=geojson&access_token=${token}`,
+      `https://api.mapbox.com/directions/v5/mapbox/walking/${startCoord[0]},${startCoord[1]};${endCoord[0]},${endCoord[1]}?steps=true&geometries=geojson&access_token=${token}`,
       { method: 'GET' }
     );
 
     const data = await response.json();
+    console.log("response data:",data)
+
+    if(data.code=="InvalidInput"){
+      alert(data.message);
+      return;
+    }
+
     const temp_route = data.routes[0].geometry.coordinates;
-    console.log(temp_route)
+    // Check if temp_route is an array of arrays
+    console.log("receive array : ", temp_route)
+
+    
     setRoute(temp_route);
   }
 
   useEffect(()=>{
-    // getRoute();
-    // getPlaces();
-  },[])
+
+    console.log("coordinates received in map : ",startCoord,endCoord)
+    getRoute();
+   
+  },[startCoord,endCoord])
 
   const geojson = {
     type: 'Feature',

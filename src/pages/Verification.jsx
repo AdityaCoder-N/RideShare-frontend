@@ -10,7 +10,7 @@ const Verification = () => {
     const host='http://localhost:3001'
 
     const [formData,setFormData]=useState({name:'',dob:"",dlNumber:'',state:''})
-    const [userImage,setUserImage] = useState('');
+    const [userImage,setUserImage] = useState(null);
     const onchange = (e)=>{
        
         setFormData({...formData,[e.target.name]:e.target.value});
@@ -84,6 +84,11 @@ const Verification = () => {
     const onsubmit = async (e) => {
         e.preventDefault();
       
+        if(!userImage){
+            alert("Please Click your live Image");
+            return;
+        }
+
         console.log(dlPhoto.current.files)
         // Create a FormData object
         const actualformData = new FormData();
@@ -132,6 +137,7 @@ const Verification = () => {
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.name}
                     onChange={onchange}
+                    required
                 />
             </div>
             <div className='flex flex-col gap-1 mt-2'>
@@ -142,6 +148,7 @@ const Verification = () => {
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.dob}
                     onChange={onchange}
+                    required
                 />
                 
             </div>
@@ -152,6 +159,7 @@ const Verification = () => {
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.state}
                     onChange={onchange}
+                    required
                 />
             </div>
             <div className='flex flex-col gap-1 mt-2'>
@@ -161,6 +169,7 @@ const Verification = () => {
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.dlNumber}
                     onChange={onchange}
+                    required
                 />
             </div>
             <div className='flex flex-col gap-1 mt-2'>

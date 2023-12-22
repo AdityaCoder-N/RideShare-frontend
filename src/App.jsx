@@ -9,6 +9,7 @@ import CreateRide from './pages/CreateRide';
 import Verification from './pages/Verification';
 import ViewRequests from './pages/ViewRequests';
 import RidesStatus from './pages/RidesStatus';
+import AcceptRide from './pages/AcceptRide';
 function App() {
   
   return (
@@ -23,7 +24,8 @@ function App() {
           <Route path="/verify" element={<Verification/>} />
           <Route path="/view-requests" element={<ViewRequests/>} />
           <Route path="/ride-status" element={<RidesStatus/>} />
-          
+          <Route path="/accept-ride/:id" element={<AcceptRide/>} />
+
         </Routes>
       </Router>
     </div>

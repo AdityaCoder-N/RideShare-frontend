@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../components/Navbar'
 import SearchRide from '../components/SearchRide'
 import MapSection from '../components/MapSection'
@@ -6,10 +6,23 @@ import AvailableRides from '../components/AvailableRides'
 
 const Home = () => {
 
-  const [startCoord,setStartCoord] = useState([78.032188,30.316496]);
-  const [endCoord,setEndCoord] = useState([77.10068000,28.65655000]);
+  const [startCoord,setStartCoord] = useState([0,0]);
+  const [endCoord,setEndCoord] = useState([0,0]);
 
   const [rides,setRides] = useState([])
+
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition((position)=>{
+      let latitude=position.coords.latitude;
+      let longitude=position.coords.longitude;
+
+      let coords=[longitude,latitude];
+
+      console.log(coords)
+      setStartCoord(coords);
+      setEndCoord(coords);
+    })
+  },[])
 
   return (
     <div>
@@ -20,7 +33,7 @@ const Home = () => {
                 <AvailableRides setStartCoord={setStartCoord} setEndCoord={setEndCoord} rides={rides}/>
             </div>
             <div className='w-[70%] p-4 z-1'>
-                {/* <MapSection startCoord={startCoord} endCoord={endCoord}   /> */}
+                <MapSection startCoord={startCoord} endCoord={endCoord}   />
             </div>
         </div>
     </div>

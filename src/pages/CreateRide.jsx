@@ -42,6 +42,26 @@ const CreateRide = () => {
 
     const host='http://localhost:3001'
 
+    function calculateDistance(source, destination) {
+        const [lon1, lat1] = source;
+        const [lon2, lat2] = destination;
+    
+        const earthRadius = 6371; // Earth radius in kilometers
+      
+        const dLat = (lat2 - lat1) * (Math.PI / 180);
+        const dLon = (lon2 - lon1) * (Math.PI / 180);
+      
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      
+        const distance = earthRadius * c; // Distance in kilometers
+        // console.log(distance)
+        return distance;
+      }
+
     const onsubmit = async (e) => {
         e.preventDefault();
     
@@ -54,10 +74,10 @@ const CreateRide = () => {
     
             const postedBy = user._id;
     
-            console.log(sourceCoord, destinationCoord);
+            const cost =Math.round(calculateDistance(sourceCoord,destinationCoord)*13.5);
     
             axios.post(`${host}/ride/create-ride`,
-                { ...formData, sourceCoord, destinationCoord, postedBy,source,destination }
+                { ...formData, sourceCoord, destinationCoord, postedBy,source,destination,cost }
             ).then((res)=>{
                 if(res.data.success){
                     alert('Ride created Successfully');
