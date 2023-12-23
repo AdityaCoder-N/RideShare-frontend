@@ -1,13 +1,14 @@
 import React,{useRef, useState,useContext} from 'react'
 import close from '../assets/x-circle-fill.svg'
-import UserContext from '../context/UserContext'
+
 import Cookies from 'js-cookie'
-
+import HostContext from '../context/HostContext'
 const Verification = () => {
+    const {host} = useContext(HostContext);
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    const {user} = useContext(UserContext)
     const authToken = Cookies.get('authToken');
-    const host='http://localhost:3001'
+   
 
     const [formData,setFormData]=useState({name:'',dob:"",dlNumber:'',state:'',contact:''})
     const [userImage,setUserImage] = useState(null);
@@ -119,13 +120,21 @@ const Verification = () => {
             
             const data = await response.json();
             console.log(data);
+            if(data.success){
+                alert('Verification Request sent Successfully');
+            }
+            else{
+                alert(data.error)
+            }
+            setFormData({name:'',dob:"",dlNumber:'',state:'',contact:''})
+            setUserImage(null);
         } catch (error) {
             console.error(error);
         }
     };
     
     return (
-    <div className='h-[92vh] flex justify-center items-center bg-image '>
+    <div className='h-[120vh] flex justify-center items-center bg-image '>
 
         <form onSubmit={onsubmit} className='bg-[rgba(255,255,255,0.28)] rounded-xl px-4 py-4 backdrop-blur-md '>
             <h2 className='text-4xl font-bold'>Verify Yourself</h2>
@@ -157,7 +166,7 @@ const Verification = () => {
                 <label htmlFor="" className='font-semibold ml-1'>Contact Number</label>
                 
                 <input
-                    name="contact" placeholder="Enter valid date" type="number"
+                    name="contact" placeholder="Enter your Contact Number" type="number"
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.contact}
                     onChange={onchange}

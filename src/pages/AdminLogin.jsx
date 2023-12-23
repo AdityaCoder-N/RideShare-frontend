@@ -2,12 +2,11 @@ import React,{useEffect, useState,useContext} from 'react'
 import img from '../assets/register-bg.jpg'
 import Cookies from 'js-cookie';
 import { Link, useNavigate } from 'react-router-dom';
-import UserContext from '../context/UserContext';
+import HostContext from '../context/HostContext';
 const AdminLogin = () => {
    
-    const host='http://localhost:3001'
-    const {setUser} = useContext(UserContext)
-
+    
+    const {host} = useContext(HostContext);
     const navigate = useNavigate();
     const [credentials,setCredentials] = useState({email:'',password:''});
 
@@ -32,9 +31,8 @@ const AdminLogin = () => {
             alert(data.error);
             return;
         }
-        setUser(data.user)
-        Cookies.set('authToken',data.authToken);
         
+        Cookies.set('authToken',data.authToken);
         localStorage.setItem('user',JSON.stringify(data.user));
 
 

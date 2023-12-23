@@ -1,34 +1,25 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import sourceImg from '../assets/source.svg'
 import dest from '../assets/destination.svg'
 import { AddressAutofill } from '@mapbox/search-js-react';
 
-
+import HostContext from '../context/HostContext';
 const SearchRide = ({setRides}) => {
-    const host='http://localhost:3001'
+    const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw'
+    
+    const user = JSON.parse(localStorage.getItem('user'));
+    const {host} = useContext(HostContext);
     const [source,setSource] = useState('');
     const [destination,setDestination] = useState('');
 
     const onsubmit = async(e)=>{
         e.preventDefault();
-        // console.log(source)
-    }
-
-    const onSourceSelect = (feature) => {
-        setSource(feature.place_name);
-    };
-    
-    const onDestinationSelect = (feature) => {
-    setDestination(feature.place_name);
-    };
-
-    const getRides=async()=>{
-
         const response = await fetch(`${host}/ride/get-rides`,{
-            method:'GET',
+            method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
+            body:JSON.stringify({userId:user._id})
         })
 
         const data = await response.json();
@@ -37,18 +28,26 @@ const SearchRide = ({setRides}) => {
         if(data.success){
             setRides(data.rides);
         }
-
     }
+
+    const onSourceSelect = (feature) => {
+        console.log(feature.place_name);
+        setSource(feature.place_name);
+    };
+    
+    const onDestinationSelect = (feature) => {
+    setDestination(feature.place_name);
+    };
 
   return (
     <form className='border-2 border-gray-400 rounded-xl p-4' onSubmit={onsubmit}>
         <div className='flex justify-between items-center'>
             <h2 className='text-2xl font-semibold mb-2 ml-1'>Search Ride</h2>
-            <span className='font-semibold'>Balance - 2342 coins</span>
+            <span className='font-semibold'>Balance - {user.balance} coins</span>
         </div>
         <div className='relative mt-4'>
             <img src={sourceImg} alt="" className='absolute left-2 top-[50%] translate-y-[-50%]'/>
-            <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw"
+            <AddressAutofill accessToken={mapToken}
             onSelect={onSourceSelect}>
                 <input
                     name="address" placeholder="Source Location" type="text"
@@ -62,7 +61,7 @@ const SearchRide = ({setRides}) => {
         </div>
         <div className='relative mt-4'>
             <img src={dest} alt="" className='absolute left-2 top-[50%] translate-y-[-50%]'/>
-            <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw"
+            <AddressAutofill accessToken={mapToken}
             onSelect={onDestinationSelect}>
                 <input
                     name="address" placeholder="Destination Location" type="text"
@@ -75,7 +74,7 @@ const SearchRide = ({setRides}) => {
             </AddressAutofill>
         </div>
 
-        <button className='py-3 px-2 pl-8 w-full rounded-xl outline-none bg-black text-white mt-4 text-lg' type='submit' onClick={getRides}>Search</button>
+        <button className='py-3 px-2 pl-8 w-full rounded-xl outline-none bg-black text-white mt-4 text-lg' type='submit'>Search</button>
         
     </form>
   )

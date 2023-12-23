@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import car from '../assets/car.jpg'
-import AcceptRideModal from './AcceptRideModal';
+
 import { useNavigate } from 'react-router-dom';
 
 
-const SingleRide = ({name,seats,from,to,startCoord,endCoord,setStartCoord,setEndCoord,id})=>{
+const SingleRide = ({name,seats,from,to,startCoord,endCoord,setStartCoord,setEndCoord,id,cost})=>{
 
     const [accept,setAccept] = useState(false);
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ const SingleRide = ({name,seats,from,to,startCoord,endCoord,setStartCoord,setEnd
                 </div>
                 <div className='w-[70%]'>
                     <div className='font-semibold'>Rider Name - {name}</div>
-                    <div className='font-semibold'>Cost - 450 coins</div>
+                    <div className='font-semibold'>Cost - {cost} coins</div>
                     <div className='font-semibold'>Seats Available - {seats}</div>
 
                 </div>
@@ -39,7 +39,7 @@ const SingleRide = ({name,seats,from,to,startCoord,endCoord,setStartCoord,setEnd
             <button className='bg-black text-white rounded-xl py-1 w-full mt-3 cursor-pointer' onClick={setRouteCoordinates}>View Route</button>
             <button className='bg-black text-white rounded-xl py-1 w-full mt-2 cursor-pointer'  onClick={acceptRide}>Accept Ride</button>
 
-            {/* {accept && <AcceptRideModal setAccept={setAccept}/>} */}
+            
         </div>
     )
 }
@@ -56,7 +56,7 @@ const AvailableRides = ({rides ,setStartCoord,setEndCoord}) => {
             {
             rides.map((ride,index)=>{
                 return(
-                    <SingleRide name={ride.postedBy.name} seats={ride.seatsAvailable} from={ride.source} to={ride.destination} startCoord={ride.sourceCoord} endCoord={ride.destinationCoord} key={index} setStartCoord={setStartCoord} setEndCoord={setEndCoord} id={ride._id}/>
+                    <SingleRide name={ride.postedBy.name} seats={ride.seatsAvailable} from={ride.source} to={ride.destination} startCoord={ride.sourceCoord} endCoord={ride.destinationCoord} key={index} setStartCoord={setStartCoord} setEndCoord={setEndCoord} id={ride._id} cost={ride.cost}/>
                 )
             })    
             }

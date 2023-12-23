@@ -1,14 +1,14 @@
 import React,{useState,useContext} from 'react'
 import img from '../assets/register-bg.jpg'
-import UserContext from '../context/UserContext'
-import Cookies from 'js-cookie'
+
 import { Link, useNavigate } from 'react-router-dom'
+import HostContext from '../context/HostContext'
 
 const SignUp = () => {
-
+    const {host} = useContext(HostContext);
     const navigate = useNavigate();
-    const host='http://localhost:3001'
-    const {setUser} = useContext(UserContext)
+   
+   
     const [credentials,setCredentials] = useState({name:'',email:'',password:'',confirmPassword:''});
 
     const onchange = (e) =>{
@@ -23,8 +23,6 @@ const SignUp = () => {
             setCredentials({...credentials,password:'',confirmPassword:''})
             return;
         }
-
-        console.log(credentials)
 
         const response = await fetch(`${host}/auth/register`,{
             method:'POST',

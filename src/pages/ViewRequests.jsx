@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import img from '../assets/register-bg.jpg'
 
-import UserContext from '../context/UserContext'
 import { useNavigate } from 'react-router-dom'
+import HostContext from '../context/HostContext'
 
 const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob,id , setRequests,requests})=>{
 
-
-    const host='http://localhost:3001'
+    
+    const {host} = useContext(HostContext);
     
     const convertPath=(path)=>{
 
@@ -32,14 +32,31 @@ const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob,id , setRequests
             alert(data.message);
         }
         else{
+            alert("Request Accepted");
             setRequests(requests.filter(ele=>ele._id!=id));
         }
 
     }
     
+    const deleteRequest=async()=>{
+        const response = await fetch(`${host}/admin/delete-request/${id}`,{
+            method:'DELETE'
+        });
+
+        const data =  await response.json()
+
+        console.log(data)
+        if(!data.success){
+            alert(data.message);
+        }
+        else{
+            alert("Request Accepted");
+            setRequests(requests.filter(ele=>ele._id!=id));
+        }
+    }
 
     return (
-        <div className='bg-gray-400 rounded-md p-4 flex flex-col gap-2 h-[450px]'>
+        <div className='bg-gray-400 rounded-md p-4 flex flex-col gap-2 h-[500px]'>
 
             <h3 className='text-lg font-bold'>Name - {name}</h3>
             <div className='flex gap-4 h-[60%] w-full'>
@@ -59,7 +76,11 @@ const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob,id , setRequests
             <div className='font-semibold'>User DL Number - {dlNumber}</div>
             <div className='font-semibold'>User DOB - {dob}</div>
             
-            <button className='mt-4 py-2 px-4 w-full bg-slate-800 text-white rounded-md' onClick={acceptRequest}>Accept Request</button>
+            <div className='flex gap-2'>
+                <button className='mt-4 py-2 px-4 w-full bg-slate-800 text-white rounded-md' onClick={acceptRequest}>Accept Request</button>
+                <button className='mt-4 py-2 px-4 w-full bg-slate-800 text-white rounded-md' onClick={deleteRequest}>Delete Request</button>
+
+            </div>
         </div>
 
     )
@@ -69,7 +90,7 @@ const SingleRequest=({name,userPhoto,dlPhoto,state,dlNumber,dob,id , setRequests
 
 const ViewRequests = () => {
     
-    const {user}=useContext(UserContext)
+    const user = JSON.parse(localStorage.getItem('user'));
     const navigate= useNavigate();
     
     const host='http://localhost:3001'
@@ -92,17 +113,13 @@ const ViewRequests = () => {
 
     useEffect(()=>{
 
-       
-        console.log("view request me user : ",user)
-        // if(!user?.isAdmin){
-        //     navigate('/');
-        // }
-    
+        if(!(user?.isAdmin)){
+            navigate('/');
+        }
 
         fetchRequests();
-        
-    
     },[])
+
   return (
     <div className='h-[92vh] w-[100%] p-4 bg-slate-800'>
 
@@ -115,7 +132,7 @@ const ViewRequests = () => {
             requests.map((request)=>{
 
                 return (
-                    <SingleRequest name={request.name} userPhoto={request.profilePhotoUrl} dlPhoto={request.dlPhotoUrl} dlNumber={request.lisenceNumber} dob={request.dob} state={request.state} id={request._id} key={request._id} setRequests={setRequests} requests={requests}/>
+                    <SingleRequest name={request.userName} userPhoto={request.profilePhotoUrl} dlPhoto={request.dlPhotoUrl} dlNumber={request.lisenceNumber} dob={request.dob} state={request.state} id={request._id} key={request._id} setRequests={setRequests} requests={requests}/>
                 )
 
             }):<h2 className='text-gray-400 font-semibold text-center text-xl absolute left-[50%] translate-x-[-50%]'>No Requests Found</h2>

@@ -3,8 +3,8 @@ import ReactMapGL, { Marker,Source,Layer, NavigationControl ,GeolocateControl } 
 
 const MapSection = ({startCoord,endCoord}) => {
 
-  const token='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw'
-
+  const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw'
+  
   const [route,setRoute] = useState([])
 
   const getRoute = async()=>{
@@ -16,7 +16,7 @@ const MapSection = ({startCoord,endCoord}) => {
     })
 
     const response = await fetch(
-      `https://api.mapbox.com/directions/v5/mapbox/walking/${startCoord[0]},${startCoord[1]};${endCoord[0]},${endCoord[1]}?steps=true&geometries=geojson&access_token=${token}`,
+      `https://api.mapbox.com/directions/v5/mapbox/walking/${startCoord[0]},${startCoord[1]};${endCoord[0]},${endCoord[1]}?steps=true&geometries=geojson&access_token=${mapToken}`,
       { method: 'GET' }
     );
 
@@ -29,9 +29,6 @@ const MapSection = ({startCoord,endCoord}) => {
     }
 
     const temp_route = data.routes[0].geometry.coordinates;
-    // Check if temp_route is an array of arrays
-    // console.log("receive array : ", temp_route)
-
     
     setRoute(temp_route);
   }
@@ -77,7 +74,7 @@ const MapSection = ({startCoord,endCoord}) => {
       {...viewState}
       onMove={evt=>setViewState(evt.viewState)}
       mapStyle="mapbox://styles/mapbox/streets-v9"
-      mapboxAccessToken={token}
+      mapboxAccessToken={mapToken}
       style={{height:'85vh',zIndex:1}}
     >
       <Source id='routeSource' type='geojson' data={geojson}>

@@ -2,11 +2,11 @@ import React,{useEffect, useState,useContext} from 'react'
 import img from '../assets/register-bg.jpg'
 import Cookies from 'js-cookie';
 import { Link, useNavigate } from 'react-router-dom';
-import UserContext from '../context/UserContext';
+import HostContext from '../context/HostContext';
 const Login = () => {
    
-    const host='http://localhost:3001'
-    const {setUser} = useContext(UserContext)
+    const {host} = useContext(HostContext);
+    
 
     const navigate = useNavigate();
     const [credentials,setCredentials] = useState({email:'',password:''});
@@ -33,7 +33,6 @@ const Login = () => {
             return;
         }
 
-        setUser(data.user)
         Cookies.set('authToken',data.authToken);
         
         localStorage.setItem('user',JSON.stringify(data.user));
@@ -82,7 +81,7 @@ const Login = () => {
             </div>
             
             <button className='bg-[#214264] hover:bg-[#19314a] cursor-pointer text-white py-2 text-lg w-full rounded-xl mt-6 ' type='submit'>Login</button>
-            <p className='mt-4 text-center'> Already have an account? <Link to='/register' className='font-semibold'>Register here</Link> </p>
+            <p className='mt-4 text-center'> Already have an account? <Link to='/signup' className='font-semibold'>Register here</Link> </p>
             
         </form>
     </div>

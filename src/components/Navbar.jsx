@@ -2,16 +2,16 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import UserContext from '../context/UserContext';
+
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const {user,setUser} = useContext(UserContext);
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const [admin,setAdmin]=useState(false);
 
   useEffect(()=>{
-    console.log("navbar me user : ",user)
+    
     if(user==null){
       navigate('/login')
     }
@@ -21,7 +21,6 @@ const Navbar = () => {
   },[])
 
   const logout = () =>{
-    setUser(null);
     Cookies.remove('authToken');
     localStorage.clear();
     navigate('/login');

@@ -12,6 +12,7 @@ const Home = () => {
   const [rides,setRides] = useState([])
 
   useEffect(()=>{
+
     navigator.geolocation.getCurrentPosition((position)=>{
       let latitude=position.coords.latitude;
       let longitude=position.coords.longitude;

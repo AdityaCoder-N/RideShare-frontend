@@ -1,6 +1,6 @@
 import React, { useEffect, useState , useContext } from "react";
 import axios from "axios";
-import UserContext from '../context/UserContext';
+import HostContext from "../context/HostContext";
 
 const options = [
   { value: "Pending", label: "Pending" },
@@ -9,7 +9,9 @@ const options = [
 ];
 
 const RidesStatus = () => {
-    const {user} = useContext(UserContext)
+  const {host} = useContext(HostContext);
+  const user = JSON.parse(localStorage.getItem('user'));
+
   const [rideShared, setRideShared] = useState(true);
   const [RideSharedList, setRideSharedList] = useState([]);
   const [RideTakenList, setRideTakenList] = useState([]);
@@ -29,16 +31,16 @@ const RidesStatus = () => {
 
   const getRideTaken = ()=>{
     let u = JSON.parse(localStorage.getItem("user"));
-    axios.get(`http://localhost:3001/ride/ride-taken-status/${u._id}`).then((response)=>{
-        console.log("31.........." , response );
+    axios.get(`${host}/ride/ride-taken-status/${u._id}`).then((response)=>{
         setRideTakenList(response.data.rides);
+        console.log(response.data)
     }).catch((error)=>{
         console.log(error);
     })
   }
 
   const rideCompleteHandler = (id)=>{
-    axios.get(`http://localhost:3001/ride/ride-complete/${id}`).then((response)=>{
+    axios.get(`${host}/ride/ride-complete/${id}`).then((response)=>{
         if(response.status === 200)
         {
             getRideShared();
@@ -50,20 +52,20 @@ const RidesStatus = () => {
 
 
   const getRideShared = () => {
-    console.log(user , 30)
-    let u = JSON.parse(localStorage.getItem("user"));
-  axios
-    .get(
-      `http://localhost:3001/ride/ride-shared-status/${u._id}`
-    )
-    .then((response) => {
-      console.log(response);
-      setRideSharedList(response.data.rides);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+      // console.log(user , 30)
+      let u = JSON.parse(localStorage.getItem("user"));
+    axios
+      .get(
+        `${host}/ride/ride-shared-status/${u._id}`
+      )
+      .then((response) => {
+        // console.log(response);
+        setRideSharedList(response.data.rides);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   useEffect(() => {
    
     getRideShared();
@@ -182,11 +184,12 @@ const RidesStatus = () => {
           <div className="container mx-auto mt-8">
             <div className="bg-white  shadow-md rounded-lg">
               {/* Table Header */}
-              <div className="grid grid-cols-6 gap-5 border-b border-gray-200 p-4 font-bold">
+              <div className="grid grid-cols-7 gap-5 border-b border-gray-200 p-4 font-bold">
                 <div className="col-span-1">Source</div>
                 <div className="col-span-1">Destination</div>
                 <div className="col-span-1">Provided By</div>
                 <div className="col-span-1">Departure Time</div>
+                <div className="col-span-1">Contact Info</div>
                 <div className="col-span-1 ">Cost</div>
                 <div className="col-span-1 ">Status</div>
            
@@ -195,7 +198,7 @@ const RidesStatus = () => {
               {/* Table Body (Sample Data) */}
               {RideTakenList.map((r, index) => {
                 return (
-                  <div key={index} className="grid grid-cols-6 gap-5 p-4">
+                  <div key={index} className="grid grid-cols-7 gap-5 p-4">
                     <div className="col-span-1">{r.source}</div>
                     <div className="col-span-1">{r.destination}</div>
                     {r.postedBy && (
@@ -203,6 +206,7 @@ const RidesStatus = () => {
                     )}
                     {!r.postedBy && <div className="col-span-1">---</div>}
                     <div className="col-span-1">{r.startTime}</div>
+                    <div className="col-span-1">{r.postedBy?.contact}</div>
                     <div className="col-span-1">{r.cost}</div>
                     <div className="col-span-1 flex">
                       {r.status === "PENDING" && (

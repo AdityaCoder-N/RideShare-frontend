@@ -1,10 +1,11 @@
 import React,{useState,useContext} from 'react'
 import axios from 'axios';
 import { AddressAutofill } from '@mapbox/search-js-react';
-import UserContext from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import HostContext from '../context/HostContext';
 const CreateRide = () => {
     
+    const {host} = useContext(HostContext);
     const navigate = useNavigate();
     const token='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw'
 
@@ -12,7 +13,8 @@ const CreateRide = () => {
     const [source,setSource] = useState('');
     const [destination,setDestination] = useState('');
 
-    const {user} = useContext(UserContext)
+    const user = JSON.parse(localStorage.getItem('user'));
+
 
     const onSourceSelect = (feature) => {
     
@@ -24,8 +26,6 @@ const CreateRide = () => {
     };
 
     const onchange=(e)=>{
-        console.log(e.target.name)
-        console.log(e.target.value)
         setFormData({...formData,[e.target.name]:e.target.value})
     }
 
@@ -39,8 +39,6 @@ const CreateRide = () => {
         // console.log("searched coordinates : ",searched)
         return searched
     }
-
-    const host='http://localhost:3001'
 
     function calculateDistance(source, destination) {
         const [lon1, lat1] = source;
@@ -82,7 +80,9 @@ const CreateRide = () => {
                 if(res.data.success){
                     alert('Ride created Successfully');
                     console.log(res);
-                    navigate('/create-ride');
+                    setFormData({startDate:'',startTime:'',cost:'',seatsAvailable:''});
+                    setDestination('')
+                    setSource('')
                 }
             }).catch((err)=>{
                 alert(err.response.data.message)
@@ -94,7 +94,7 @@ const CreateRide = () => {
     };
 
   return (
-    <div className='h-[92vh] flex justify-center items-center bg-image '>
+    <div className='h-[120vh] flex justify-center items-center bg-image '>
 
         <form action="" className='bg-[rgba(255,255,255,0.28)] rounded-xl p-8 backdrop-blur-md ' onSubmit={onsubmit}>
             <h2 className='text-4xl font-bold'>Create a Ride!</h2>
@@ -110,6 +110,7 @@ const CreateRide = () => {
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={source}
                     onChange={(e)=>setSource(e.target.value)}
+                    required
                 />
                 </AddressAutofill>
             </div>
@@ -122,6 +123,7 @@ const CreateRide = () => {
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={destination}
                     onChange={(e)=>setDestination(e.target.value)}
+                    required
                 />
                 </AddressAutofill>
             </div>
@@ -133,6 +135,7 @@ const CreateRide = () => {
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.startDate}
                     onChange={onchange}
+                    required
                 />
                 
             </div>
@@ -144,6 +147,7 @@ const CreateRide = () => {
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.startTime}
                     onChange={onchange}
+                    required
                 />
                 
             </div>
@@ -155,6 +159,7 @@ const CreateRide = () => {
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.seatsAvailable}
                     onChange={onchange}
+                    required
                 />
                 
             </div>

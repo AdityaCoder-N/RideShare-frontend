@@ -3,18 +3,22 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import check from '../assets/check-circle-fill.svg'
-import UserContext from '../context/UserContext'
+
+import HostContext from '../context/HostContext'
 
 const AcceptRide = () => {
 
+    const {host} = useContext(HostContext);
+
     const navigate = useNavigate();
-    const host='http://localhost:3001'
+    
     const {id} = useParams();
     const token = Cookies.get('authToken')
 
     const [ride,setRide] = useState({});
 
-    const {user} = useContext(UserContext)
+    const user = JSON.parse(localStorage.getItem('user'));
+    const [img,setImg] = useState('');
 
     const getRide=async()=>{
         const response = await fetch(`${host}/ride/get-ride/${id}`,{
@@ -29,6 +33,9 @@ const AcceptRide = () => {
 
         if(data.success){
             setRide(data.ride);
+            let imgPath = data.ride.postedBy.imageUrl;
+            const path = convertPath(imgPath)
+            setImg(path);
         }
         else{
             alert(data.message);
@@ -81,11 +88,20 @@ const AcceptRide = () => {
       
         return `${day}/${month}/${year}`;
       }
+
+
+    const convertPath=(path)=>{
+
+        const normalizedPath = path.replace(/\\/g, '/');
+        const finalPath = `${host}/${normalizedPath}`;
+        return finalPath;
+
+    }
     return (
     <div className='bg-slate-800 h-[92vh] w-full p-8 px-32 flex justify-center items-center'>
         
 
-        <div className='bg-slate-400 rounded-md p-8 font-semibold text-3xl w-[60%]'>
+        <div className='bg-slate-400 rounded-md p-8 font-semibold text-2xl w-[60%]'>
 
             <div className='flex items-center justify-between '>
                 <div>
@@ -96,7 +112,7 @@ const AcceptRide = () => {
                     </div>
 
                 </div>
-                <img src={ride.postedBy?.imageUrl} alt="" className='h-[100px] w-[100px] object-fit'/>
+                <img src={img} alt="" className='h-[100px] w-[100px] object-fit'/>
             </div>
 
             <div className='flex justify-between items-center mt-8 gap-4'>
@@ -121,6 +137,7 @@ const AcceptRide = () => {
             </div>
             <div className='mt-4'>
                 Cost - {ride.cost} coins
+                {(user.balance<ride.cost)?' (Insufficient Balance)':''}
             </div>
             <div className='mt-4'>
                 Seats Available : {ride.seatsAvailable}
