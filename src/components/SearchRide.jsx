@@ -43,7 +43,7 @@ const SearchRide = ({setRides}) => {
     <form className='border-2 border-gray-400 rounded-xl p-4' onSubmit={onsubmit}>
         <div className='flex justify-between items-center'>
             <h2 className='text-2xl font-semibold mb-2 ml-1'>Search Ride</h2>
-            <span className='font-semibold'>Balance - {user.balance} coins</span>
+            <span className='font-semibold'>Balance - {user?.balance} coins</span>
         </div>
         <div className='relative mt-4'>
             <img src={sourceImg} alt="" className='absolute left-2 top-[50%] translate-y-[-50%]'/>
