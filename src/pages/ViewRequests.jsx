@@ -93,7 +93,7 @@ const ViewRequests = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const navigate= useNavigate();
     
-    const host='http://localhost:3001'
+    const {host} = useContext(HostContext);
 
     const [requests,setRequests] = useState([]);
 
