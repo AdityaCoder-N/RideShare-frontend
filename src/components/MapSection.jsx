@@ -3,7 +3,7 @@ import ReactMapGL, { Marker,Source,Layer, NavigationControl ,GeolocateControl } 
 
 const MapSection = ({startCoord,endCoord}) => {
 
-  const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw'
+  const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscW0wZXB2NzJjZjkyaXRrNnJldnlmZmoifQ._mEj9WyWI7Q7O-gRZ_fRow'
   
   const [route,setRoute] = useState([])
 
