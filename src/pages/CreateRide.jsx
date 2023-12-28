@@ -7,7 +7,7 @@ const CreateRide = () => {
     
     const {host} = useContext(HostContext);
     const navigate = useNavigate();
-    const token='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw'
+    const token='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscW0wZXB2NzJjZjkyaXRrNnJldnlmZmoifQ._mEj9WyWI7Q7O-gRZ_fRow'
 
     const [formData,setFormData] = useState({startDate:'',startTime:'',cost:'',seatsAvailable:''})
     const [source,setSource] = useState('');
