@@ -5,7 +5,7 @@ import { AddressAutofill } from '@mapbox/search-js-react';
 
 import HostContext from '../context/HostContext';
 const SearchRide = ({setRides}) => {
-    const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw'
+    const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscW0wZXB2NzJjZjkyaXRrNnJldnlmZmoifQ._mEj9WyWI7Q7O-gRZ_fRow'
     
     const user = JSON.parse(localStorage.getItem('user'));
     const {host} = useContext(HostContext);
