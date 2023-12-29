@@ -39,14 +39,14 @@ const SignUp = () => {
     }
 
   return (
-    <div className='h-[100vh] w-[100%] relative bg-[#2A4D77]'>
-        <img src={img} alt="" className='absolute h-[100vh] w-[100%] object-cover top-0 left-0'/>
+    <div className='h-[120vh] md:h-[100vh] w-[100%] relative bg-[#2A4D77]'>
+        <img src={img} alt="" className='absolute h-[120vh] md:h-[100vh] w-[100%] object-cover top-0 left-0'/>
 
-        <div className='absolute text-white left-[10%] top-[10%] w-[40%]'>
-            <h1 className='text-[80px] font-bold ' >RideShare</h1>
-            <p className='text-2xl font-semibold'>Hop on board! Sign up now for seamless rides and friendly journeys.</p>
+        <div className='absolute text-white left-[5%] md:left-[10%] top-[2%] md:top-[10%] w-[40%]'>
+            <h1 className='text-[50px] md:text-[80px] font-bold' >RideShare</h1>
+            <p className='hidden md:block text-2xl font-semibold'>Hop on board! Sign up now for seamless rides and friendly journeys.</p>
         </div>
-        <form className='p-8 w-[30%] bg-white rounded-xl z-50 absolute right-[10%] top-[50%] translate-y-[-50%]' onSubmit={onsubmit}>
+        <form className='p-8 w-[90%] md:w-[30%] bg-white rounded-xl z-50 absolute  left-[50%] translate-x-[-50%] md:left-auto md:translate-x-[0%] md:right-[10%] top-[52%] md:top-[50%] translate-y-[-50%]' onSubmit={onsubmit}>
 
             <h2 className='font-bold text-3xl'>Register Today</h2>
             <p className='mb-8 mt-2 text-gray-500 font-semibold'>Ready for the ride of a lifetime? Register now and let the journey begin! </p>

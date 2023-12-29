@@ -48,7 +48,7 @@ const SingleRide = ({name,seats,from,to,startCoord,endCoord,setStartCoord,setEnd
 const AvailableRides = ({rides ,setStartCoord,setEndCoord}) => {
 
   return (
-    <div className='rounded-xl border-2 border-gray-500 p-2 mt-2'>
+    <div className='rounded-xl border-2 border-gray-500 p-2 mt-4 md:mt-2'>
         <h2 className='text-xl font-semibold'>Available Rides</h2>
 
         <div className='max-h-[42vh] h-[42vh] overflow-y-scroll mt-2'>

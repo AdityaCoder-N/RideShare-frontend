@@ -7,7 +7,7 @@ const CreateRide = () => {
     
     const {host} = useContext(HostContext);
     const navigate = useNavigate();
-    const token='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscW0wZXB2NzJjZjkyaXRrNnJldnlmZmoifQ._mEj9WyWI7Q7O-gRZ_fRow'
+    const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscW0wZXB2NzJjZjkyaXRrNnJldnlmZmoifQ._mEj9WyWI7Q7O-gRZ_fRow'
 
     const [formData,setFormData] = useState({startDate:'',startTime:'',cost:'',seatsAvailable:''})
     const [source,setSource] = useState('');
@@ -96,13 +96,13 @@ const CreateRide = () => {
   return (
     <div className='h-[120vh] flex justify-center items-center bg-image '>
 
-        <form action="" className='bg-[rgba(255,255,255,0.28)] rounded-xl p-8 backdrop-blur-md ' onSubmit={onsubmit}>
+        <form action="" className='bg-[rgba(255,255,255,0.28)] rounded-xl p-8 backdrop-blur-md md:w-auto w-[90%] z-10' onSubmit={onsubmit}>
             <h2 className='text-4xl font-bold'>Create a Ride!</h2>
             <p className='text-lg mb-4'>Help other civillians reach their destination by sharing your ride.</p>
 
             <div className='flex flex-col gap-1 mt-6'>
                 <label htmlFor="" className='font-semibold ml-1'>Source Location</label>
-                <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw"
+                <AddressAutofill accessToken={mapToken}
                 onSelect={onSourceSelect}>
                 <input
                     name="source" placeholder="Where will you start from?" type="text"
@@ -116,7 +116,7 @@ const CreateRide = () => {
             </div>
             <div className='flex flex-col gap-1 mt-2'>
                 <label htmlFor="" className='font-semibold ml-1'>Destination Location</label>
-                <AddressAutofill accessToken="pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscWM5aG42ZTAxMTUya3NhaWtxZTlmeGUifQ.xxZYdLlsK_dOvLig0Ynanw" onSelect={onDestinationSelect}>
+                <AddressAutofill accessToken={mapToken} onSelect={onDestinationSelect}>
                 <input
                     name="destination" placeholder="Where to?" type="text"
                     autoComplete="address-line1"

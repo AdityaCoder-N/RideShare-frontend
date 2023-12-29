@@ -51,14 +51,14 @@ const Login = () => {
     },[])
 
   return (
-    <div className='h-[100vh] w-[100%] relative bg-[#2A4D77]'>
+    <div className='h-[100vh] w-[100vw] relative bg-[#2A4D77]'>
         <img src={img} alt="" className='absolute h-[100vh] w-[100%] object-cover top-0 left-0'/>
 
-        <div className='absolute text-white left-[10%] top-[10%] w-[40%]'>
-            <h1 className='text-[80px] font-bold ' >RideShare</h1>
-            <p className='text-2xl font-semibold'>Hop on board! Sign up now for seamless rides and friendly journeys.</p>
+        <div className='absolute text-white left-[5%] md:left-[10%] top-[10%] w-[40%]'>
+            <h1 className='text-[50px] md:text-[80px] font-bold ' >RideShare</h1>
+            <p className='hidden md:block text-2xl font-semibold'>Hop on board! Sign up now for seamless rides and friendly journeys.</p>
         </div>
-        <form className='p-8 w-[30%] bg-white rounded-xl z-50 absolute right-[10%] top-[50%] translate-y-[-50%]' onSubmit={onsubmit}>
+        <form className='p-8 w-[90%] md:w-[30%] bg-white rounded-xl z-50 absolute  left-[50%] translate-x-[-50%] md:left-auto md:translate-x-[0%] md:right-[10%] top-[60%] md:top-[50%] translate-y-[-50%]' onSubmit={onsubmit}>
 
             <div className='flex justify-between items-center'>
                 <h2 className='font-bold text-3xl'>Login</h2>

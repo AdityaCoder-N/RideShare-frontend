@@ -136,9 +136,9 @@ const Verification = () => {
     return (
     <div className='h-[120vh] flex justify-center items-center bg-image '>
 
-        <form onSubmit={onsubmit} className='bg-[rgba(255,255,255,0.28)] rounded-xl px-4 py-4 backdrop-blur-md '>
-            <h2 className='text-4xl font-bold'>Verify Yourself</h2>
-            <p className='text-lg mb-4'>To be able to create rides , it is important to verify yourself wit the platform.</p>
+        <form onSubmit={onsubmit} className='bg-[rgba(255,255,255,0.28)] rounded-xl px-4 py-4 backdrop-blur-md md:w-auto w-[90%]'>
+            <h2 className='text-2xl md:text-4xl font-bold'>Verify Yourself</h2>
+            <p className='text-base md:text-lg mb-4'>To be able to create rides , it is important to verify yourself wit the platform.</p>
 
             <div className='flex flex-col gap-1 mt-3'>
                 <label htmlFor="" className='font-semibold ml-1'>Name</label>
@@ -216,11 +216,11 @@ const Verification = () => {
         </form>
         {
             show &&
-            <div className='fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-20 p-4 bg-white'>
+            <div className='fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-20 p-4 bg-white '>
 
                 <img src={close} alt="" className='absolute right-[5%] top-[5%] cursor-pointer z-50 h-[25px] w-[25px]' onClick={closeCam}/>
 
-                <div className='flex gap-5 w-full'>
+                <div className='flex gap-5  md:w-full md:h-auto h-[40vh] w-[90vw]'>
                     <video ref={videoRef} className='w-[50%]'></video>
                     <canvas ref={photoRef} className='w-[50%]'></canvas>
 

@@ -72,7 +72,7 @@ const RidesStatus = () => {
   }, []);
 
   return (
-    <div className="bg-slate-800 h-[92vh] w-full py-1 px-8">
+    <div className="bg-slate-800 h-auto md:h-[92vh] w-full py-1 px-2 md:px-8">
       <div className="flex justify-end text-white gap-5 mt-8">
         <button
           className="border-2 hover:border-blue-700 bg-yellow-500 p-2 hover:text-black hover:bg-blue-300"
@@ -98,12 +98,12 @@ const RidesStatus = () => {
 
       {rideShared && (
         <div>
-          <h1 className="text-white text-2xl font-bold">Rides I have Shared</h1>
+          <h1 className="text-white md:text-2xl font-bold md:mt-0 mt-4">Rides I have Shared</h1>
 
           <div className="container mx-auto mt-8">
             <div className="bg-white  shadow-md rounded-lg">
               {/* Table Header */}
-              <div className="grid grid-cols-6 border-b border-gray-200 p-4 gap-5 font-bold">
+              <div className="grid grid-cols-6 border-b border-gray-200 p-4 md:gap-5 font-bold md:text-[16px] text-[8px]">
                 <div className="col-span-1">Source</div>
                 <div className="col-span-1">Destination</div>
                 <div className="col-span-1">Accepted By</div>
@@ -115,7 +115,7 @@ const RidesStatus = () => {
               {/* Table Body (Sample Data) */}
               {RideSharedList.map((r, index) => {
                 return (
-                  <div key={index} className="grid grid-cols-6 p-4 gap-5">
+                  <div key={index} className="grid grid-cols-6 p-4 gap-5 md:text-[16px] text-[8px]">
                     <div className="col-span-1">{r.source}</div>
                     <div className="col-span-1">{r.destination}</div>
                     {r.acceptedBy && (
@@ -177,14 +177,14 @@ const RidesStatus = () => {
 
       {!rideShared && (
         <div>
-          <h1 className="text-white text-2xl font-bold mt-2">
+          <h1 className="text-white md:text-2xl font-bold md:mt-0 mt-4">
             Rides I am Taking
           </h1>
 
           <div className="container mx-auto mt-8">
             <div className="bg-white  shadow-md rounded-lg">
               {/* Table Header */}
-              <div className="grid grid-cols-7 gap-5 border-b border-gray-200 p-4 font-bold">
+              <div className="grid grid-cols-7 gap-5 border-b border-gray-200 p-4 font-bold md:text-[16px] text-[8px]">
                 <div className="col-span-1">Source</div>
                 <div className="col-span-1">Destination</div>
                 <div className="col-span-1">Provided By</div>
@@ -198,7 +198,7 @@ const RidesStatus = () => {
               {/* Table Body (Sample Data) */}
               {RideTakenList.map((r, index) => {
                 return (
-                  <div key={index} className="grid grid-cols-7 gap-5 p-4">
+                  <div key={index} className="grid grid-cols-7 gap-5 p-4 md:text-[16px] text-[8px]">
                     <div className="col-span-1">{r.source}</div>
                     <div className="col-span-1">{r.destination}</div>
                     {r.postedBy && (

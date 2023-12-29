@@ -42,7 +42,7 @@ const SearchRide = ({setRides}) => {
   return (
     <form className='border-2 border-gray-400 rounded-xl p-4' onSubmit={onsubmit}>
         <div className='flex justify-between items-center'>
-            <h2 className='text-2xl font-semibold mb-2 ml-1'>Search Ride</h2>
+            <h2 className='text-lg md:text-2xl font-semibold md:mb-2 md:ml-1'>Search Ride</h2>
             <span className='font-semibold'>Balance - {user?.balance} coins</span>
         </div>
         <div className='relative mt-4'>
@@ -74,7 +74,7 @@ const SearchRide = ({setRides}) => {
             </AddressAutofill>
         </div>
 
-        <button className='py-3 px-2 pl-8 w-full rounded-xl outline-none bg-black text-white mt-4 text-lg' type='submit'>Search</button>
+        <button className='py-3 px-2 md:pl-8 w-full rounded-xl outline-none bg-black text-white mt-4 text-lg' type='submit'>Search</button>
         
     </form>
   )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignUp from './pages/SignUp';
@@ -13,6 +13,7 @@ import AcceptRide from './pages/AcceptRide';
 import AdminLogin from './pages/AdminLogin';
 
 function App() {
+  const [show,setShow]=useState(false);
   return (
     <div>
       <Router>
@@ -28,9 +29,9 @@ function App() {
             path="/*"
             element={
               <>
-                <Navbar />
+                <Navbar show={show} setShow={setShow}/>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<Home show={show} setShow={setShow}/>} />
                   <Route path="/create-ride" element={<CreateRide />} />
                   <Route path="/verify" element={<Verification />} />
                   <Route path="/view-requests" element={<ViewRequests />} />

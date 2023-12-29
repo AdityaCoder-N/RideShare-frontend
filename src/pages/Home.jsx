@@ -4,7 +4,7 @@ import SearchRide from '../components/SearchRide'
 import MapSection from '../components/MapSection'
 import AvailableRides from '../components/AvailableRides'
 
-const Home = () => {
+const Home = ({show,setShow}) => {
 
   const [startCoord,setStartCoord] = useState([0,0]);
   const [endCoord,setEndCoord] = useState([0,0]);
@@ -12,8 +12,8 @@ const Home = () => {
   const [rides,setRides] = useState([])
 
   useEffect(()=>{
-
-    navigator.geolocation.getCurrentPosition((position)=>{
+    console.log("in home : ",show)
+   navigator.geolocation.getCurrentPosition((position)=>{
       let latitude=position.coords.latitude;
       let longitude=position.coords.longitude;
 
@@ -24,17 +24,18 @@ const Home = () => {
       setEndCoord(coords);
     })
   },[])
+  
 
   return (
     <div>
-        <div className='flex'>
-            <div className='w-[30%] p-4'>
-                <SearchRide setRides={setRides}/>
+        <div className='flex md:flex-row flex-col items-center'>
+            <div className='w-[90%] md:w-[30%] p-4'>
+                {!show && <SearchRide setRides={setRides} show={show}/>}
 
                 <AvailableRides setStartCoord={setStartCoord} setEndCoord={setEndCoord} rides={rides}/>
             </div>
-            <div className='w-[70%] p-4 z-1'>
-                <MapSection startCoord={startCoord} endCoord={endCoord}   />
+            <div className='w-[90%] md:w-[70%] p-4 z-1'>
+                {!show && <MapSection startCoord={startCoord} endCoord={endCoord}  show={show} />}
             </div>
         </div>
     </div>
