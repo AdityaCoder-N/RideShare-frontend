@@ -4,7 +4,7 @@ import car from '../assets/car.jpg'
 import { useNavigate } from 'react-router-dom';
 
 
-const SingleRide = ({name,seats,from,to,startCoord,endCoord,setStartCoord,setEndCoord,id,cost})=>{
+const SingleRide = ({name,seats,from,to,startCoord,endCoord,setStartCoord,setEndCoord,id,cost,vehichle})=>{
 
     const [accept,setAccept] = useState(false);
     const navigate = useNavigate();
@@ -19,13 +19,14 @@ const SingleRide = ({name,seats,from,to,startCoord,endCoord,setStartCoord,setEnd
     }
     return(
         <div className='bg-gray-300 rounded-xl p-4 mt-2'>
-            <div className='flex w-full gap-4'>
-                <div className='w-[30%] h-[80px]'>
+            <div className='flex w-full gap-5'>
+                <div className='w-[30%] h-[100px]'>
                     <img src={car} alt="" className='h-full w-full object-cover'/>
                 </div>
                 <div className='w-[70%]'>
                     <div className='font-semibold'>Rider Name - {name}</div>
-                    <div className='font-semibold'>Cost - {cost} coins</div>
+                    <div className='font-semibold'>Cost - {cost} tokens</div>
+                    <div className='font-semibold'>Vehichle - {vehichle}</div>
                     <div className='font-semibold'>Seats Available - {seats}</div>
 
                 </div>
@@ -53,10 +54,11 @@ const AvailableRides = ({rides ,setStartCoord,setEndCoord}) => {
 
         <div className='max-h-[42vh] h-[42vh] overflow-y-scroll mt-2'>
 
+            {(rides.length===0) && <h2 className='mt-8 ml-4 text-zinc-500 text-md'> No Available Rides at the moment </h2>}
             {
             rides.map((ride,index)=>{
                 return(
-                    <SingleRide name={ride.postedBy.name} seats={ride.seatsAvailable} from={ride.source} to={ride.destination} startCoord={ride.sourceCoord} endCoord={ride.destinationCoord} key={index} setStartCoord={setStartCoord} setEndCoord={setEndCoord} id={ride._id} cost={ride.cost}/>
+                    <SingleRide name={ride.postedBy.name} seats={ride.seatsAvailable} from={ride.source} to={ride.destination} startCoord={ride.sourceCoord} endCoord={ride.destinationCoord} key={index} setStartCoord={setStartCoord} setEndCoord={setEndCoord} id={ride._id} cost={ride.cost} vehichle={ride.vehichle}/>
                 )
             })    
             }

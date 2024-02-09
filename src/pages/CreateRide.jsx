@@ -9,7 +9,7 @@ const CreateRide = () => {
     const navigate = useNavigate();
     const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscW0wZXB2NzJjZjkyaXRrNnJldnlmZmoifQ._mEj9WyWI7Q7O-gRZ_fRow'
 
-    const [formData,setFormData] = useState({startDate:'',startTime:'',cost:'',seatsAvailable:''})
+    const [formData,setFormData] = useState({startDate:'',startTime:'',cost:'',seatsAvailable:'',vehichle:''})
     const [source,setSource] = useState('');
     const [destination,setDestination] = useState('');
 
@@ -17,12 +17,12 @@ const CreateRide = () => {
 
 
     const onSourceSelect = (feature) => {
-    
+        console.log(feature.place_name);
         setSource(feature.place_name);
     };
     
     const onDestinationSelect = (feature) => {
-    setDestination(feature.place_name);
+        setDestination(feature.place_name);
     };
 
     const onchange=(e)=>{
@@ -31,7 +31,7 @@ const CreateRide = () => {
 
     const getCoordinates=async(location)=>{
         
-        const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${token}`)
+        const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${mapToken}`)
         const data = await res.json();
         // console.log(data);
     
@@ -80,7 +80,7 @@ const CreateRide = () => {
                 if(res.data.success){
                     alert('Ride created Successfully');
                     console.log(res);
-                    setFormData({startDate:'',startTime:'',cost:'',seatsAvailable:''});
+                    setFormData({startDate:'',startTime:'',cost:'',seatsAvailable:'',vehichle:''});
                     setDestination('')
                     setSource('')
                 }
@@ -146,6 +146,18 @@ const CreateRide = () => {
                     name="startTime" placeholder="Enter valid Time" type="time"
                     className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
                     value={formData.startTime}
+                    onChange={onchange}
+                    required
+                />
+                
+            </div>
+            <div className='flex flex-col gap-1 mt-2'>
+                <label htmlFor="" className='font-semibold ml-1'>Vehichle</label>
+                
+                <input
+                    name="vehichle" placeholder="Enter the mode of transport" type="text"
+                    className='py-3 px-2 w-full rounded-xl outline-none bg-gray-300 placeholder:text-[#888888] placeholder:font-semibold placeholder:text-xl'
+                    value={formData.vehichle}
                     onChange={onchange}
                     required
                 />

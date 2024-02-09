@@ -15,19 +15,8 @@ const RidesStatus = () => {
   const [rideShared, setRideShared] = useState(true);
   const [RideSharedList, setRideSharedList] = useState([]);
   const [RideTakenList, setRideTakenList] = useState([]);
-  const [selectedAction, setSelectedAction] = useState(null);
+  
   const [selectedStatus, setSelectedStatus] = useState("Pending");
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-
-  const handleEditClick = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
-
-  const handleStatusChange = (status) => {
-    setSelectedStatus(status);
-    console.log(selectedStatus);
-    setDropdownVisible(false);
-  };
 
   const getRideTaken = ()=>{
     let u = JSON.parse(localStorage.getItem("user"));
@@ -43,7 +32,7 @@ const RidesStatus = () => {
     axios.get(`${host}/ride/ride-complete/${id}`).then((response)=>{
         if(response.status === 200)
         {
-            getRideShared();
+            getRideTaken();
         }
     }).catch((error)=>{
         console.log(error);
@@ -59,13 +48,14 @@ const RidesStatus = () => {
         `${host}/ride/ride-shared-status/${u._id}`
       )
       .then((response) => {
-        // console.log(response);
+        console.log(response.data);
         setRideSharedList(response.data.rides);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   useEffect(() => {
    
     getRideShared();
@@ -103,19 +93,19 @@ const RidesStatus = () => {
           <div className="container mx-auto mt-8">
             <div className="bg-white  shadow-md rounded-lg">
               {/* Table Header */}
-              <div className="grid grid-cols-6 border-b border-gray-200 p-4 md:gap-5 font-bold md:text-[16px] text-[8px]">
+              <div className="grid grid-cols-5 border-b border-gray-200 p-4 md:gap-5 font-bold md:text-[16px] text-[8px]">
                 <div className="col-span-1">Source</div>
                 <div className="col-span-1">Destination</div>
                 <div className="col-span-1">Accepted By</div>
                 <div className="col-span-1">Departure Time</div>
                 <div className="col-span-1 ">Status</div>
-                <div className="col-span-1 ">Action</div>
+               
               </div>
 
               {/* Table Body (Sample Data) */}
               {RideSharedList.map((r, index) => {
                 return (
-                  <div key={index} className="grid grid-cols-6 p-4 gap-5 md:text-[16px] text-[8px]">
+                  <div key={index} className="grid grid-cols-5 p-4 gap-5 md:text-[16px] text-[8px]">
                     <div className="col-span-1">{r.source}</div>
                     <div className="col-span-1">{r.destination}</div>
                     {r.acceptedBy && (
@@ -143,30 +133,7 @@ const RidesStatus = () => {
                         </span>
                       )}
                     </div>
-                    <div className="col-span-1 flex justify-end">
-                      {/* Edit Button with Dropdown */}
-                      {r.acceptedBy && (
-                        <div className="flex gap-2">
-                          {r.status === "PENDING" && (
-                            <button
-                              className="bg-blue-500 text-white px-4 py-2 rounded"
-                              onClick={handleEditClick }
-                            >
-                              Active
-                            </button>
-                          )}
-
-                          {r.status === "ACTIVE" && (
-                            <button
-                              className="bg-blue-500 text-white px-4 py-2 rounded"
-                              onClick={rideCompleteHandler(r._id)}
-                            >
-                              Completed
-                            </button>
-                          )}
-                        </div>
-                      )}
-                    </div>
+                    
                   </div>
                 );
               })}
@@ -184,7 +151,7 @@ const RidesStatus = () => {
           <div className="container mx-auto mt-8">
             <div className="bg-white  shadow-md rounded-lg">
               {/* Table Header */}
-              <div className="grid grid-cols-7 gap-5 border-b border-gray-200 p-4 font-bold md:text-[16px] text-[8px]">
+              <div className="grid grid-cols-8 gap-5 border-b border-gray-200 p-4 font-bold md:text-[16px] text-[8px]">
                 <div className="col-span-1">Source</div>
                 <div className="col-span-1">Destination</div>
                 <div className="col-span-1">Provided By</div>
@@ -192,13 +159,14 @@ const RidesStatus = () => {
                 <div className="col-span-1">Contact Info</div>
                 <div className="col-span-1 ">Cost</div>
                 <div className="col-span-1 ">Status</div>
+                <div className="col-span-1 ">Action</div>
            
               </div>
                
               {/* Table Body (Sample Data) */}
               {RideTakenList.map((r, index) => {
                 return (
-                  <div key={index} className="grid grid-cols-7 gap-5 p-4 md:text-[16px] text-[8px]">
+                  <div key={index} className="grid grid-cols-8 gap-5 p-4 md:text-[16px] text-[8px]">
                     <div className="col-span-1">{r.source}</div>
                     <div className="col-span-1">{r.destination}</div>
                     {r.postedBy && (
@@ -227,6 +195,21 @@ const RidesStatus = () => {
                           Completed{" "}
                         </span>
                       )}
+                    </div>
+                    <div className="col-span-1 flex justify-start">
+                      
+                        <div className="flex gap-2">
+                        
+                            <button
+                            disabled={(r.status==="COMPLETED")?true:false}
+                              className={` ${(r.status==="COMPLETED")?'bg-blue-200':'bg-blue-500'} text-white px-4 py-2 rounded`}
+                              onClick={()=>rideCompleteHandler(r._id)}
+                            >
+                              Complete Ride
+                            </button>
+                          
+                        </div>
+                     
                     </div>
                   
                   </div>

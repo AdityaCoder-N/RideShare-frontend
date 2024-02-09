@@ -4,7 +4,7 @@ import dest from '../assets/destination.svg'
 import { AddressAutofill } from '@mapbox/search-js-react';
 
 import HostContext from '../context/HostContext';
-const SearchRide = ({setRides}) => {
+const SearchRide = ({setRides,balance}) => {
     const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscW0wZXB2NzJjZjkyaXRrNnJldnlmZmoifQ._mEj9WyWI7Q7O-gRZ_fRow'
     
     const user = JSON.parse(localStorage.getItem('user'));
@@ -43,7 +43,7 @@ const SearchRide = ({setRides}) => {
     <form className='border-2 border-gray-400 rounded-xl p-4' onSubmit={onsubmit}>
         <div className='flex justify-between items-center'>
             <h2 className='text-lg md:text-2xl font-semibold md:mb-2 md:ml-1'>Search Ride</h2>
-            <span className='font-semibold'>Balance - {user?.balance} coins</span>
+            <span className='font-semibold'>Balance - {balance} tokens</span>
         </div>
         <div className='relative mt-4'>
             <img src={sourceImg} alt="" className='absolute left-2 top-[50%] translate-y-[-50%]'/>

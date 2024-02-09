@@ -45,6 +45,7 @@ const AcceptRide = () => {
     useEffect(()=>{
         console.log(id)
         getRide();
+        console.log("user in accept ride: ",user)
 
     },[])
 
@@ -52,7 +53,7 @@ const AcceptRide = () => {
 
         console.log(JSON.stringify({
             rideId:id,
-                userId:user._id
+            userId:user._id
         }))
         axios.post(`${host}/ride/accept-ride`,
         {
@@ -136,7 +137,7 @@ const AcceptRide = () => {
 
             </div>
             <div className='mt-4'>
-                Cost - {ride.cost} coins
+                Cost - {ride.cost} tokens
                 {(user.balance<ride.cost)?' (Insufficient Balance)':''}
             </div>
             <div className='mt-4'>

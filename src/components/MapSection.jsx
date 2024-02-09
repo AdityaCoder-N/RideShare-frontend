@@ -12,7 +12,7 @@ const MapSection = ({startCoord,endCoord}) => {
     setViewState({
       latitude: startCoord[1],
       longitude: startCoord[0],
-      zoom: 14,
+      zoom: 7,
     })
 
     const response = await fetch(
