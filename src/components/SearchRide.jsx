@@ -5,7 +5,7 @@ import { AddressAutofill } from '@mapbox/search-js-react';
 
 import HostContext from '../context/HostContext';
 const SearchRide = ({setRides,balance}) => {
-    const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscW0wZXB2NzJjZjkyaXRrNnJldnlmZmoifQ._mEj9WyWI7Q7O-gRZ_fRow'
+    const mapToken= import.meta.env.VITE_APP_MAP_TOKEN;
     
     const user = JSON.parse(localStorage.getItem('user'));
     const {host} = useContext(HostContext);

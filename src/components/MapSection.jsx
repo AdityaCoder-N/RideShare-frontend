@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ReactMapGL, { Marker,Source,Layer, NavigationControl ,GeolocateControl } from 'react-map-gl';
 
 const MapSection = ({startCoord,endCoord}) => {
-
-  const mapToken='pk.eyJ1IjoiYWRpdHlhLTE3IiwiYSI6ImNscW0wZXB2NzJjZjkyaXRrNnJldnlmZmoifQ._mEj9WyWI7Q7O-gRZ_fRow'
+  
+  const mapToken= import.meta.env.VITE_APP_MAP_TOKEN;
   
   const [route,setRoute] = useState([])
 
